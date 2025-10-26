@@ -11,17 +11,17 @@ public class Drop extends Game {
     public SpriteBatch batch;
     public BitmapFont font;
     public FitViewport viewport;
+    public Controle_Diagrama_Estados controle;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
         font = new BitmapFont();
         viewport = new FitViewport(8, 5);
+        controle = new Controle_Diagrama_Estados(this);
 
         font.setUseIntegerPositions(false);
         font.getData().setScale(viewport.getWorldHeight() / Gdx.graphics.getHeight());
-
-        this.setScreen(new MainMenuScreen(this)); // define a tela inicial
     }
 
     @Override

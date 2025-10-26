@@ -9,9 +9,11 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class MainMenuScreen implements Screen {
 
     final Drop game;
+    final Controle_Diagrama_Estados controle;
 
-    public MainMenuScreen(final Drop game) {
+    public MainMenuScreen(final Drop game, Controle_Diagrama_Estados controle) {
         this.game = game;
+        this.controle = controle;
     }
 
     @Override
