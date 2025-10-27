@@ -6,10 +6,18 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.video.VideoPlayer;
 import com.badlogic.gdx.video.VideoPlayerCreator;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.io.FileNotFoundException;
+
+import static com.terminalroot.game.Controle_Diagrama_Estados.State.MENU_PRINCIPAL;
 
 public class MenuInicial implements Screen {
     final Drop game;
@@ -19,6 +27,9 @@ public class MenuInicial implements Screen {
     private SpriteBatch batch;
     private int videoWidth;
     private int videoHeight;
+
+    private Stage stage;
+    private Skin skin;
 
     public MenuInicial(final Drop game, Controle_Diagrama_Estados controle){
         this.game = game;
@@ -37,6 +48,29 @@ public class MenuInicial implements Screen {
         } catch (Exception e) {
             System.err.println("Erro ao carregar vídeo: " + e.getMessage());
         }
+
+        stage = new Stage(game.viewport);
+        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+
+        controlebotao();
+
+        Gdx.input.setInputProcessor(stage);
+    }
+
+    private void controlebotao(){
+        Table table = new Table();
+        table.setFillParent(true);
+
+        Botao botao_iniciar = new Botao("Começar jogo", skin);
+        botao_iniciar.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                controle.Trocar_estado(MENU_PRINCIPAL);
+            }
+        });
+
+        table.bottom().right();
+        table.add(botao_iniciar).pad(10).width(150).height(50);
     }
 
     public void render(float delta){

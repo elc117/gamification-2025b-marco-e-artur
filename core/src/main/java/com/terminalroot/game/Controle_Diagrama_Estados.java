@@ -22,10 +22,10 @@ public class Controle_Diagrama_Estados {
 
     public Controle_Diagrama_Estados(Drop game){
         this.game = game;
-        setState(State.MENU_INICIAL);
+        Trocar_estado(State.MENU_INICIAL);
     }
 
-    public void setState(State novoEstado){
+    public void Trocar_estado(State novoEstado){
         if(tela_atual != null){
             tela_atual.dispose();
         }
