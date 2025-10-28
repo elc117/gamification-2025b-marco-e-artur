@@ -5,15 +5,17 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.video.VideoPlayer;
 import com.badlogic.gdx.video.VideoPlayerCreator;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import org.w3c.dom.Text;
 
 import java.io.FileNotFoundException;
 
@@ -27,9 +29,11 @@ public class MenuInicial implements Screen {
     private SpriteBatch batch;
     private int videoWidth;
     private int videoHeight;
-
     private Stage stage;
-    private Skin skin;
+
+    // flags pra controlar o video
+    private boolean video_acabou = false;
+    Texture imagem_pos_video;
 
     public MenuInicial(final Drop game, Controle_Diagrama_Estados controle){
         this.game = game;
@@ -38,9 +42,10 @@ public class MenuInicial implements Screen {
     }
 
     public void show(){
-        player = VideoPlayerCreator.createVideoPlayer();
+        imagem_pos_video = new Texture("Imagem_final.png");
 
-        FileHandle file = Gdx.files.internal("video_intro.webm");
+        player = VideoPlayerCreator.createVideoPlayer();
+        FileHandle file = Gdx.files.internal("video_certo.webm");
 
         try {
             player.load(file);
@@ -49,39 +54,38 @@ public class MenuInicial implements Screen {
             System.err.println("Erro ao carregar vídeo: " + e.getMessage());
         }
 
-        stage = new Stage(game.viewport);
-        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
-
-        controlebotao();
-
+        Skin skin = new Skin(Gdx.files.internal("ui/ui_skin.json"));
+        stage = new Stage(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         Gdx.input.setInputProcessor(stage);
-    }
 
-    private void controlebotao(){
         Table table = new Table();
         table.setFillParent(true);
+        table.top().right();
+        stage.addActor(table);
 
-        Botao botao_iniciar = new Botao("Começar jogo", skin);
-        botao_iniciar.addListener(new ClickListener() {
+        Botao botaoiniciar = new Botao("Iniciar", skin, new Botao.AcaoBotao() {
             @Override
-            public void clicked(InputEvent event, float x, float y) {
+            public void executar() {
                 controle.Trocar_estado(MENU_PRINCIPAL);
             }
         });
-
-        table.bottom().right();
-        table.add(botao_iniciar).pad(10).width(150).height(50);
+        table.add(botaoiniciar).width(100).height(50).pad(20);
+        table.row();
     }
 
     public void render(float delta){
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if (player != null) {
+        if (player != null && !video_acabou) {
             player.update();
 
-                videoWidth = player.getVideoWidth();
-                videoHeight = player.getVideoHeight();
+            if(!player.isPlaying()){
+                video_acabou = true;
+            }
+
+            videoWidth = player.getVideoWidth();
+            videoHeight = player.getVideoHeight();
 
             Texture frame = player.getTexture();
             if (frame != null) {
@@ -94,6 +98,21 @@ public class MenuInicial implements Screen {
 
                 batch.end();
             }
+        }
+        // depos que o vídeo acaba a gente quer chamar 1 imagem igual ao ultimo frase do video e os botões
+        if(video_acabou == true){
+            // isso aq é p limpar a tela aparentemente, acho que dá pra tirar depois
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+            batch.begin();
+            // Essa aqui é a imagem de plano de fundo, tudo é pra ser desenhado em cima da imagem, em tese
+            // a imagem aparnetemente tá sendo esticada, TEM QUE ARRUMAR ISSO EM ALGUM MOMENTO COM PACIÊNCIA ><<<><><><
+            batch.draw(imagem_pos_video, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            batch.end();
+
+            stage.act(delta);
+            stage.draw();
         }
     }
 
