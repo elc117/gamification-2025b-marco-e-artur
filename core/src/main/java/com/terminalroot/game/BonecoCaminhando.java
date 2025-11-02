@@ -101,10 +101,10 @@ public class BonecoCaminhando {
             }
         }
 
-        AnimacaoCaminhaCima = new Animation<>(0.15f,DirCima);
-        AnimacaoCaminhaBaixo = new Animation<>(0.15f, DirBaixo);
-        AnimacaoCaminhaEsquerda = new Animation<>(0.15f, DirEsq);
-        AnimacaoCaminhaDireita = new Animation<>(0.15f, DirDireita);
+        AnimacaoCaminhaCima = new Animation<>(0.10f,DirCima);
+        AnimacaoCaminhaBaixo = new Animation<>(0.10f, DirBaixo);
+        AnimacaoCaminhaEsquerda = new Animation<>(0.10f, DirEsq);
+        AnimacaoCaminhaDireita = new Animation<>(0.10f, DirDireita);
 
         AnimacaoCaminhaCima.setPlayMode(Animation.PlayMode.LOOP);
         AnimacaoCaminhaBaixo.setPlayMode(Animation.PlayMode.LOOP);

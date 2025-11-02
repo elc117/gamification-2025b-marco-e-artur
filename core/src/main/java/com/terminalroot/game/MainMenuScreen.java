@@ -14,7 +14,6 @@ public class MainMenuScreen implements Screen {
 
     final Drop game;
     final Controle_Diagrama_Estados controle;
-    private SpriteBatch batch;
     Texture tela_principal;
 
     // Implementação do personagem, dá pra trocar isso depois
@@ -23,7 +22,6 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen(final Drop game, Controle_Diagrama_Estados controle) {
         this.game = game;
         this.controle = controle;
-        this.batch = new SpriteBatch();
     }
 
     @Override
@@ -34,8 +32,8 @@ public class MainMenuScreen implements Screen {
 
         boneco = new Boneco(bonecoSprite);
 
-        boneco.setPosition(Gdx.graphics.getWidth() / 2f,Gdx.graphics.getHeight() /2f);
-        boneco.setSize(64,64);
+        boneco.setPosition(game.viewport.getWorldWidth()/2f, game.viewport.getWorldHeight()/2f);
+        boneco.setSize(0.5f,0.5f);
         Gdx.input.setInputProcessor(boneco);
     }
 
@@ -44,15 +42,10 @@ public class MainMenuScreen implements Screen {
         ScreenUtils.clear(Color.DARK_GRAY);
 
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
-        batch.begin();
-        batch.draw(tela_principal, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        boneco.draw(batch);
-        batch.end();
-
-        if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-            game.setScreen(new GameScreen(game));
-            dispose();
-        }
+        game.batch.begin();
+        game.batch.draw(tela_principal,0,0,game.viewport.getWorldWidth(),game.viewport.getWorldHeight());
+        boneco.draw(game.batch);
+        game.batch.end();
     }
 
     @Override

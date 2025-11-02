@@ -15,7 +15,7 @@ public class Boneco extends Sprite implements InputProcessor {
 
     private BonecoCaminhando animation;
     private String direcao = "baixo";
-    private float velocidade = 1f;
+    private float velocidade = 0.01f;
 
     public Boneco(Sprite sprite) {
         super(sprite);
