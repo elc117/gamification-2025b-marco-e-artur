@@ -14,12 +14,16 @@ public class Main extends Game {
     public FillViewport viewport;
     public Controle_Diagrama_Estados controle;
 
+    // Skin do boneco, variavel global
+    public static String SkinBoneco = "SkinSolomonk";
+
     @Override
     public void create() {
         batch = new SpriteBatch();
         font = new BitmapFont();
         viewport = new FillViewport(8, 5);
         controle = new Controle_Diagrama_Estados(this);
+
 
         font.setUseIntegerPositions(false);
         font.getData().setScale(viewport.getWorldHeight() / Gdx.graphics.getHeight());

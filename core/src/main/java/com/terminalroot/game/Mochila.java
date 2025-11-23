@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import static com.terminalroot.game.Controle_Diagrama_Estados.State.MENU_PRINCIPAL;
-import static com.terminalroot.game.MainMenuScreen.SkinBoneco;
+import static com.terminalroot.game.Main.SkinBoneco;
 
 public class Mochila implements Screen {
     final Main game;
@@ -18,6 +18,10 @@ public class Mochila implements Screen {
     Texture background;
     Texture boneco;
     Texture seta_volta;
+    // Icone Skins
+    Texture Skinpadrao;
+    Texture Skinsolomonk;
+    Texture SkinRaposa;
 
     // Implementacao botoes
     private Stage stage;
@@ -32,6 +36,9 @@ public class Mochila implements Screen {
     public void show(){
         background = new Texture("Inventario/backgroundinventario.png");
         seta_volta = new Texture("Inventario/arrowLeft.png");
+        Skinpadrao = new Texture("Inventario/gaara.png");
+        Skinsolomonk = new Texture("Inventario/solomonk.png");
+        SkinRaposa = new Texture("Inventario/raposa.png");
 
         switch (SkinBoneco){
             case "SkinBasica":
@@ -44,10 +51,9 @@ public class Mochila implements Screen {
                 boneco = new Texture("hero/EniSkin2/SemFundo.png");
                 break;
         }
-
         // Botoes
-
         stage = new Stage(new ScreenViewport());
+        stage.setDebugAll(true);
         Gdx.input.setInputProcessor(stage);
         skin = new Skin(Gdx.files.internal("ui/ui_skin.json"));
         controleMochila = new ControleBotao(stage,skin);
@@ -58,6 +64,39 @@ public class Mochila implements Screen {
                 controle.Trocar_estado(MENU_PRINCIPAL);
             }
         });
+
+        controleMochila.criarBotao("", 7, 50, 40f, 2f, new Botao.AcaoBotao(){
+            @Override
+            public void executar() {
+                if(boneco != null) {
+                    boneco.dispose();
+                }
+                boneco = new Texture ("hero/Eni/baixo.png");
+                SkinBoneco = "SkinBasica";
+            }
+        });
+
+        controleMochila.criarBotao("", 115, 50, 50f, 2f, new Botao.AcaoBotao(){
+            @Override
+            public void executar() {
+                if(boneco != null) {
+                    boneco.dispose();
+                }
+                boneco = new Texture ("hero/EniSkin1/Semfundo.png");
+                SkinBoneco = "SkinSolomonk";
+            }
+        });
+
+        controleMochila.criarBotao("", 205, 50, 50f, 2f, new Botao.AcaoBotao(){
+            @Override
+            public void executar() {
+                if(boneco != null) {
+                    boneco.dispose();
+                }
+                boneco = new Texture ("hero/EniSkin2/SemFundo.png");
+                SkinBoneco = "SkinLast";
+            }
+        });
     }
 
     public void render(float delta){
@@ -65,7 +104,10 @@ public class Mochila implements Screen {
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
         game.batch.begin();
         game.batch.draw(background,0,0,game.viewport.getWorldWidth(),game.viewport.getWorldHeight());
-        game.batch.draw(seta_volta,0,4.5f,game.viewport.getWorldWidth() /12, game.viewport.getWorldHeight() / 12) ;
+        game.batch.draw(seta_volta,0,4.5f,game.viewport.getWorldWidth() /12, game.viewport.getWorldHeight() / 12);
+        game.batch.draw(Skinpadrao,0,0.3f,game.viewport.getWorldWidth() /12, game.viewport.getWorldHeight() / 12);
+        game.batch.draw(Skinsolomonk,1,0.3f,game.viewport.getWorldWidth() / 12, game.viewport.getWorldHeight() / 12);
+        game.batch.draw(SkinRaposa, 2, 0.3f,game.viewport.getWorldWidth() / 12, game.viewport.getWorldHeight() / 12);
         game.batch.draw(boneco, 2, 1, game.viewport.getWorldWidth() / 2, game.viewport.getWorldHeight() / 2);
         game.batch.end();
 

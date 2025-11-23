@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.w3c.dom.Text;
 
+import static com.terminalroot.game.Main.SkinBoneco;
+
 public class BonecoCaminhando {
     private Animation<TextureRegion> AnimacaoCaminhaCima;
     private Animation<TextureRegion> AnimacaoCaminhaBaixo;
@@ -29,6 +31,9 @@ public class BonecoCaminhando {
         int frameRows = 8;
         int frameTeste = 7;
 
+        switch (SkinBoneco){
+
+        }
         Texture spreedshetCaminhadaBaixo = new Texture("hero/Eni/baixo/InteiroBaixo.png");
         Texture spreedshetCaminhadaCima = new Texture("hero/Eni/cima/InteiroCima.png");
         Texture spreedshetCaminhadaEsquerda = new Texture("hero/Eni/esquerda/InteiroEsquerda.png");

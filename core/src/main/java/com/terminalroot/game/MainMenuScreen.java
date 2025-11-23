@@ -43,9 +43,6 @@ public class MainMenuScreen implements Screen {
     private Skin skin;
     private ControleBotao controleMenu;
 
-    // Skin do boneco, variavel global
-    static String SkinBoneco = "SkinSolomonk";
-
     public MainMenuScreen(final Main game, Controle_Diagrama_Estados controle) {
         this.game = game;
         this.controle = controle;
