@@ -16,6 +16,10 @@ public class Main extends Game {
 
     // Skin do boneco, variavel global
     public static String SkinBoneco = "SkinSolomonk";
+    public static int inteligencia = 5;
+    public static int forca = 5;
+    // tentar trazer todo o manejo de skins do inventario pra cá
+    public static ItensInventario inventario = new ItensInventario();
 
     @Override
     public void create() {
