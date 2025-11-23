@@ -5,12 +5,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.ArrayList;
 
-public class ControleMenu {
+public class ControleBotao {
     private Stage stage;
     private Skin skin;
     private ArrayList<Botao> botoes;
 
-    public ControleMenu(Stage stage, Skin skin){
+    public ControleBotao(Stage stage, Skin skin){
         this.stage = stage;
         this.skin = skin;
         this.botoes = new ArrayList<>();

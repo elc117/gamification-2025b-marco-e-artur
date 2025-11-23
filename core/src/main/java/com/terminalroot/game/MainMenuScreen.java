@@ -41,8 +41,9 @@ public class MainMenuScreen implements Screen {
     //Stage e UI
     private Stage stage;
     private Skin skin;
-    private ControleMenu controleMenu;
+    private ControleBotao controleMenu;
 
+    // Skin do boneco, variavel global
     static String SkinBoneco = "SkinSolomonk";
 
     public MainMenuScreen(final Main game, Controle_Diagrama_Estados controle) {
@@ -93,7 +94,7 @@ public class MainMenuScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         skin = new Skin(Gdx.files.internal("ui/ui_skin.json"));
 
-        controleMenu = new ControleMenu(stage,skin);
+        controleMenu = new ControleBotao(stage,skin);
 
         controleMenu.criarBotao("",7,224,18f,10f, new Botao.AcaoBotao(){
             @Override
