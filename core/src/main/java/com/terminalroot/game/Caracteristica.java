@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -30,13 +29,14 @@ public class Caracteristica implements Screen {
     private ArrayList<Ellipse> obstaculosElipse;
     private ArrayList<ObstaculoCirculo> obstaculoCirculos;
     private ArrayList<Rectangle> obstaculosRetangulo;
-    private ShapeRenderer shapeRenderer;
 
     private Rectangle zonainteligencia;
+    private Rectangle zonaforca;
     private Stage stage;
     private Skin skin;
     private BitmapFont font;
     private boolean bonecoOverlapInt = false;
+    private boolean bonecoOverlapForca = false;
 
     private ControleBotao controleCaracteristica;
 
@@ -59,9 +59,6 @@ public class Caracteristica implements Screen {
         obstaculosElipse = new ArrayList<>();
 
         criaConstrucao = new CriaConstrucao(game, obstaculosRetangulo, obstaculoCirculos, obstaculosElipse);
-        shapeRenderer = new ShapeRenderer();
-
-        // Não criar obstáculos - apenas a zona de inteligência será visível
 
         stage = new Stage(new ScreenViewport());
         skin = new Skin(Gdx.files.internal("ui/ui_skin.json"));
@@ -70,7 +67,6 @@ public class Caracteristica implements Screen {
         labelStyle.font = font;
         labelStyle.fontColor = Color.WHITE;
 
-        // Transformar em atributos da classe
         labelInteligencia = new Label("Inteligencia: " + inteligencia, labelStyle);
         labelInteligencia.setPosition(630, 420);
         stage.addActor(labelInteligencia);
@@ -80,25 +76,48 @@ public class Caracteristica implements Screen {
         stage.addActor(labelForca);
 
         zonainteligencia = new Rectangle(4.8f, 3.4f, 0.5f, 0.5f);
+        zonaforca = new Rectangle(1.5f, 3.4f, 0.5f, 0.5f); // Zona de força abaixo da inteligência
 
         boneco = new Boneco(bonecoSprite, criaConstrucao, controle);
         boneco.setPosition(game.viewport.getWorldWidth()/2f, game.viewport.getWorldHeight()/2f);
         boneco.setSize(0.5f, 0.5f);
 
+        controleCaracteristica = new ControleBotao(stage, skin);
+        controleCaracteristica.criarBotao("", 4.8f, 3.4f, 0.5f, 0.5f, new Botao.AcaoBotao() {
+            @Override
+            public void executar() {
+            }
+        });
+
+        // botao de forca
+        controleCaracteristica.criarBotao("", 4.8f, 2.7f, 0.5f, 0.5f, new Botao.AcaoBotao() {
+            @Override
+            public void executar() {
+            }
+        });
+
         com.badlogic.gdx.InputAdapter inputAdapter = new com.badlogic.gdx.InputAdapter() {
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                // Verifica se o boneco está na zona de inteligência
-                Rectangle bonecoRect = new Rectangle(boneco.getX(), boneco.getY(),
-                    boneco.getWidth(), boneco.getHeight());
+                com.badlogic.gdx.math.Vector3 worldCoords = game.viewport.unproject(
+                    new com.badlogic.gdx.math.Vector3(screenX, screenY, 0)
+                );
 
-                if (zonainteligencia.overlaps(bonecoRect)) {
+                Rectangle bonecolimite = boneco.limitesRetangulo();
+
+                if (zonainteligencia.contains(worldCoords.x, worldCoords.y) &&
+                    zonainteligencia.overlaps(bonecolimite)) {
                     Main.inteligencia += 1;
                     labelInteligencia.setText("Inteligencia: " + Main.inteligencia);
-                    System.out.println("Inteligencia aumentada! Total: " + Main.inteligencia);
+                    return true;
                 }
-
-                return false; // Não consome o evento
+                if (zonaforca.contains(worldCoords.x, worldCoords.y) &&
+                    zonaforca.overlaps(bonecolimite)) {
+                    Main.forca += 1;
+                    labelForca.setText("Forca: " + Main.forca);
+                    return true;
+                }
+                return false;
             }
         };
 
@@ -111,37 +130,19 @@ public class Caracteristica implements Screen {
 
     public void render(float delta){
         ScreenUtils.clear(Color.DARK_GRAY);
-        Rectangle bonecoRect = new Rectangle(boneco.getX(), boneco.getY(),
-            boneco.getWidth(), boneco.getHeight());
-        boolean estaEmZona = zonainteligencia.overlaps(bonecoRect);
+        Rectangle bonecolimite = boneco.limitesRetangulo();
+        boolean estaEmZonaInt = zonainteligencia.overlaps(bonecolimite);
+        boolean estaEmZonaForca = zonaforca.overlaps(bonecolimite);
 
-        if (estaEmZona && !bonecoOverlapInt) {
-            System.out.println("Boneco entrou na zona de inteligencia!");
-        }
-        bonecoOverlapInt = estaEmZona;
+        bonecoOverlapInt = estaEmZonaInt;
+
+        bonecoOverlapForca = estaEmZonaForca;
 
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
         game.batch.begin();
         game.batch.draw(tela_principal, 0, 0, game.viewport.getWorldWidth(), game.viewport.getWorldHeight());
         boneco.draw(game.batch);
         game.batch.end();
-
-        shapeRenderer.setProjectionMatrix(game.viewport.getCamera().combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-
-        // Desenha o boneco
-        shapeRenderer.setColor(Color.GREEN);
-        shapeRenderer.rect(boneco.getX(), boneco.getY(), boneco.getWidth(), boneco.getHeight());
-
-        // Desenha a zona de inteligência (roxo quando fora, verde quando dentro)
-        if (estaEmZona) {
-            shapeRenderer.setColor(Color.GREEN);
-        } else {
-            shapeRenderer.setColor(Color.PURPLE);
-        }
-        shapeRenderer.rect(zonainteligencia.x, zonainteligencia.y, zonainteligencia.width, zonainteligencia.height);
-
-        shapeRenderer.end();
 
         stage.act(delta);
         stage.draw();
@@ -167,7 +168,6 @@ public class Caracteristica implements Screen {
     @Override
     public void dispose() {
         tela_principal.dispose();
-        shapeRenderer.dispose();
         stage.dispose();
         skin.dispose();
         font.dispose();
