@@ -17,6 +17,14 @@ public class Main extends Game {
     // Skin do boneco, variavel global
     public static String SkinBoneco = "SkinSolomonk";
 
+    public Usuario jogador;
+
+    // true = anjos, false = demonios
+    public boolean eanjo = true;
+
+    // controle fase
+    public int fase_atual = 1;
+
     @Override
     public void create() {
         batch = new SpriteBatch();
@@ -27,6 +35,18 @@ public class Main extends Game {
 
         font.setUseIntegerPositions(false);
         font.getData().setScale(viewport.getWorldHeight() / Gdx.graphics.getHeight());
+    }
+
+    public void avancafase(){
+        fase_atual++;
+    }
+
+    public int getFaseAtual(){
+        return fase_atual;
+    }
+
+    public boolean isEAnjo(){
+        return eanjo;
     }
 
     @Override
