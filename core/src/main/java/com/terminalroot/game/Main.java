@@ -28,9 +28,37 @@ public class Main extends Game {
         viewport = new FillViewport(8, 5);
         controle = new Controle_Diagrama_Estados(this);
 
+        // Teste utilizar o Cache browser
+        carregarDados();
 
         font.setUseIntegerPositions(false);
         font.getData().setScale(viewport.getWorldHeight() / Gdx.graphics.getHeight());
+    }
+
+    // Teste cache browser
+    private void carregarDados(){
+        SaveManager save = SaveManager.getInstance();
+
+        forca = save.getForca();
+        inteligencia = save.getInteligencia();
+        SkinBoneco = save.getSkinBoneco();
+
+        // DEBUG RETIRAR DEPOIS
+        System.out.println("=== Dados Carregados ===");
+        System.out.println("Força: " + forca);
+        System.out.println("Inteligência: " + inteligencia);
+        System.out.println("Skin: " + SkinBoneco);
+    }
+
+    public void salvarDados(){
+        SaveManager save = SaveManager.getInstance();
+        save.salvarTudo(forca, inteligencia, SkinBoneco);
+    }
+
+    public void resetarDados(){
+        forca = 5;
+        inteligencia = 5;
+        SkinBoneco = "SkinBasica";
     }
 
     @Override
