@@ -1,39 +1,30 @@
-# Jogogame
+## Diagrama de estados
+![Diagrama de Estados](rdme_material/diagrama_estados.png)
 
-A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
+## Diagrama de classes
+![Diagrama de Estados](rdme_material/diagrama_classe.png)
 
-This project was generated with a template including simple application launchers and an `ApplicationAdapter` extension that draws libGDX logo.
+## Processo de Desenvolvimento
+# 20/10
+(Marco) Prática utilizando o tutorial https://www.youtube.com/watch?v=aipDYyh1Mlc&t=893s para entender um pouco mais da biblioteca.
 
-## Platforms
+# 28/10 
+(Marco) Desenvolvimento do Diagrama de Estados para manejar as telas, tanto conceitualmente quanto em código.
 
-- `core`: Main module with the application logic shared by all platforms.
-- `lwjgl3`: Primary desktop platform using LWJGL3; was called 'desktop' in older docs.
-- `html`: Web platform using GWT and WebGL. Supports only Java projects.
-- `teavm`: Web backend that supports most JVM languages.
+# 30/10 
+(Marco) Criação dos visuais de cada uma das instâncias do jogo, coliseu, sala de aula, moradia, etc...
 
-## Gradle
+# 30/10 ~~ 02/11
+(Marco) Desenvolvimento do spritesheet do boneco, movimento do boneco e tentativa de colisões
 
-This project uses [Gradle](https://gradle.org/) to manage dependencies.
-The Gradle wrapper was included, so you can run Gradle tasks using `gradlew.bat` or `./gradlew` commands.
-Useful Gradle tasks and flags:
+# 02/11 
+(Artur) Teste para criação de animações dos monstros, animação de standing usando gifs e spritesheet, não dei commit pois estava testando em um arquivo separado para não estragar o código principal
 
-- `--continue`: when using this flag, errors will not stop the tasks from running.
-- `--daemon`: thanks to this flag, Gradle daemon will be used to run chosen tasks.
-- `--offline`: when using this flag, cached dependency archives will be used.
-- `--refresh-dependencies`: this flag forces validation of all dependencies. Useful for snapshot versions.
-- `build`: builds sources and archives of every project.
-- `cleanEclipse`: removes Eclipse project data.
-- `cleanIdea`: removes IntelliJ project data.
-- `clean`: removes `build` folders, which store compiled classes and built archives.
-- `eclipse`: generates Eclipse project data.
-- `html:dist`: compiles GWT sources. The compiled application can be found at `html/build/dist`: you can use any HTTP server to deploy it.
-- `html:superDev`: compiles GWT sources and runs the application in SuperDev mode. It will be available at [localhost:8080/html](http://localhost:8080/html). Use only during development.
-- `idea`: generates IntelliJ project data.
-- `lwjgl3:jar`: builds application's runnable jar, which can be found at `lwjgl3/build/libs`.
-- `lwjgl3:run`: starts the application.
-- `teavm:build`: builds the JavaScript application into the build/dist/webapp folder.
-- `teavm:run`: serves the JavaScript application at http://localhost:8080 via a local Jetty server.
-- `test`: runs unit tests (if any).
+# 03/11 ~~ XX
+(Marco) Continuação da tentativa de colocar colisões na tela principal
 
-Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
-For example, `core:clean` removes `build` folder only from the `core` project.
+# 04/11 ~~ 06/11
+(Artur) Quiz 90% pronto, só falta adicionar a lógica de uma questão por dia, talvez tenha algumas coisas pra melhorar, como a escolha de questões aleatórias.
+
+# 06/11 ~~ XX 
+(Artur) Inicio do sistema de batalha e animação dos monstros.

@@ -20,6 +20,12 @@ public class BonecoCaminhando {
     private TextureRegion currentFrame;
     private String direcao;
 
+    // Mudança de Skins -> Implementação
+    Texture spreedshetCaminhadaBaixo;
+    Texture spreedshetCaminhadaCima;
+    Texture spreedshetCaminhadaEsquerda;
+    Texture spreedshetCaminhadaDireita;
+
     public BonecoCaminhando(){
         initAnimations();
         stateTime = 0f;
@@ -32,12 +38,25 @@ public class BonecoCaminhando {
         int frameTeste = 7;
 
         switch (SkinBoneco){
-
+            case "SkinBasica":
+                spreedshetCaminhadaBaixo = new Texture("hero/Eni/baixo/InteiroBaixo.png");
+                spreedshetCaminhadaCima = new Texture("hero/Eni/cima/InteiroCima.png");
+                spreedshetCaminhadaEsquerda = new Texture("hero/Eni/esquerda/InteiroEsquerda.png");
+                spreedshetCaminhadaDireita = new Texture("hero/Eni/direita/InteiroDireita.png");
+                break;
+            case "SkinSolomonk":
+                spreedshetCaminhadaBaixo = new Texture("hero/EniSkin1/baixo/HeroBaixo.png");
+                spreedshetCaminhadaCima = new Texture("hero/EniSkin1/cima/Herocima.png");
+                spreedshetCaminhadaEsquerda = new Texture("hero/EniSkin1/esquerda/heroesquerda.png");
+                spreedshetCaminhadaDireita = new Texture("hero/EniSkin1/direita/herodireita.png");
+                break;
+            case "SkinLast":
+                spreedshetCaminhadaBaixo = new Texture("hero/EniSkin2/baixo/HeroBaixo.png");
+                spreedshetCaminhadaCima = new Texture("hero/EniSkin2/cima/Herocima.png");
+                spreedshetCaminhadaEsquerda = new Texture("hero/EniSkin2/esquerda/heroesquerda.png");
+                spreedshetCaminhadaDireita = new Texture("hero/EniSkin2/direita/herodireita.png");
+                break;
         }
-        Texture spreedshetCaminhadaBaixo = new Texture("hero/Eni/baixo/InteiroBaixo.png");
-        Texture spreedshetCaminhadaCima = new Texture("hero/Eni/cima/InteiroCima.png");
-        Texture spreedshetCaminhadaEsquerda = new Texture("hero/Eni/esquerda/InteiroEsquerda.png");
-        Texture spreedshetCaminhadaDireita = new Texture("hero/Eni/direita/InteiroDireita.png");
 
         int frameWidth = spreedshetCaminhadaBaixo.getWidth() / frameCols;
         int frameHeight = spreedshetCaminhadaBaixo.getHeight() / frameRows;
