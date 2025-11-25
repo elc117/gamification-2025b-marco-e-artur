@@ -64,7 +64,6 @@ public class MainMenuScreen implements Screen {
         boneco.setPosition(game.viewport.getWorldWidth()/2f, game.viewport.getWorldHeight()/2f);
 
         boneco.setSize(0.5f,0.5f);
-        //Gdx.input.setInputProcessor(boneco);
 
         // Teste
         criaConstrucao.CriarPrediosTelaInicial(5000f, 4000f, 0f, 0f, 1530f, 1915f, obstaculosRetangulo);
