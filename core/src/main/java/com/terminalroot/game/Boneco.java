@@ -13,7 +13,7 @@ public class Boneco extends Sprite implements InputProcessor {
     private boolean esquerda;
     private boolean direita;
 
-    private BonecoCaminhando animation;
+    private BonecoAnimacao animation;
     private String direcao = "baixo";
     private float velocidade = 0.01f;
 
@@ -28,7 +28,7 @@ public class Boneco extends Sprite implements InputProcessor {
     public Boneco(Sprite sprite, CriaConstrucao criaConstrucao, Controle_Diagrama_Estados controle) {
         super(sprite);
         setSize(getWidth(), getHeight());
-        animation = new BonecoCaminhando();
+        animation = new BonecoAnimacao();
         this.criaConstrucao = criaConstrucao;
         this.controle = controle;
         chamaColisao = new ChamaColisao(criaConstrucao.insereObjArray);
@@ -77,6 +77,10 @@ public class Boneco extends Sprite implements InputProcessor {
         if (esquerda) {
             setX(getX() - velocidade);
             direcao = "esquerda";
+            movimento = true;
+        }
+        if(AtividadesFisicas.TreinandoForca == true){
+            direcao = "luta";
             movimento = true;
         }
         animation.update(Gdx.graphics.getDeltaTime(), direcao, movimento);
