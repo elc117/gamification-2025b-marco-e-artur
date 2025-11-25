@@ -15,7 +15,7 @@ public class Main extends Game {
     public Controle_Diagrama_Estados controle;
 
     // Skin do boneco, variavel global
-    public static String SkinBoneco = "SkinSolomonk";
+    public static String SkinBoneco = "SkinBasica";
     public static int inteligencia = 5;
     public static int forca = 5;
     // tentar trazer todo o manejo de skins do inventario pra cá
@@ -28,7 +28,6 @@ public class Main extends Game {
         viewport = new FillViewport(8, 5);
         controle = new Controle_Diagrama_Estados(this);
 
-        // Teste utilizar o Cache browser
         carregarDados();
 
         font.setUseIntegerPositions(false);
@@ -39,20 +38,38 @@ public class Main extends Game {
     private void carregarDados(){
         SaveManager save = SaveManager.getInstance();
 
-        forca = save.getForca();
-        inteligencia = save.getInteligencia();
-        SkinBoneco = save.getSkinBoneco();
+        // Verifica se existe save anterior
+        if (save.existeSave()) {
+            forca = save.getForca();
+            inteligencia = save.getInteligencia();
+            SkinBoneco = save.getSkinBoneco();
 
-        // DEBUG RETIRAR DEPOIS
-        System.out.println("=== Dados Carregados ===");
-        System.out.println("Força: " + forca);
-        System.out.println("Inteligência: " + inteligencia);
-        System.out.println("Skin: " + SkinBoneco);
+            Gdx.app.log("Main", "=== Dados Carregados ===");
+            Gdx.app.log("Main", "Força: " + forca);
+            Gdx.app.log("Main", "Inteligência: " + inteligencia);
+            Gdx.app.log("Main", "Skin: " + SkinBoneco);
+        } else {
+            Gdx.app.log("Main", "Nenhum save encontrado. Usando valores padrão.");
+            // Salva os valores padrão
+            salvarDados();
+        }
     }
 
-    public void salvarDados(){
+    public void salvarDados() {
         SaveManager save = SaveManager.getInstance();
         save.salvarTudo(forca, inteligencia, SkinBoneco);
+        Gdx.app.log("Main", "Dados salvos com sucesso!");
+    }
+
+    public static void setForca(int novaForca) {
+        forca = novaForca;
+        SaveManager.getInstance().salvarStats(forca, inteligencia);
+    }
+
+     // Atualiza apenas a inteligência e salva
+    public static void setInteligencia(int novaInteligencia) {
+        inteligencia = novaInteligencia;
+        SaveManager.getInstance().salvarStats(forca, inteligencia);
     }
 
     public void resetarDados(){
