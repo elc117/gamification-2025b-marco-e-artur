@@ -21,6 +21,14 @@ public class Main extends Game {
     // tentar trazer todo o manejo de skins do inventario pra cá
     public static ItensInventario inventario = new ItensInventario();
 
+    public Usuario jogador;
+
+    // true = anjos, false = demonios
+    public boolean eanjo = true;
+
+    // controle fase
+    public int fase_atual = 1;
+
     @Override
     public void create() {
         batch = new SpriteBatch();
@@ -77,6 +85,19 @@ public class Main extends Game {
         inteligencia = 5;
         SkinBoneco = "SkinBasica";
     }
+
+    public void avancafase(){
+        fase_atual++;
+    }
+
+    public int getFaseAtual(){
+        return fase_atual;
+    }
+
+    public boolean isEAnjo(){
+        return eanjo;   
+    }
+
 
     @Override
     public void render() {
