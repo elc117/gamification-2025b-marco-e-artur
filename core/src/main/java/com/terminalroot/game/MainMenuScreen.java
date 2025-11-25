@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -28,7 +27,6 @@ public class MainMenuScreen implements Screen {
 
     //Teste
     private CriaConstrucao criaConstrucao;
-    private ShapeRenderer shapeRenderer;
 
     // Arrays duplicados, precisa tentar refatorar isso -> Resolvido eu acho
     private ArrayList<Ellipse> obstaculosElipse;
@@ -53,9 +51,6 @@ public class MainMenuScreen implements Screen {
         tela_principal = new Texture("mapafinal.png");
         Texture bonecoTexture = new Texture("bucket.png");
         Sprite bonecoSprite = new Sprite(bonecoTexture);
-
-        //Teste
-        shapeRenderer = new ShapeRenderer();
 
         // Definição dos Arrays de obstaculos no Menu Principal, precisa passar como argumento em criaConstrucao agora
         obstaculosRetangulo = new ArrayList<>();
@@ -147,28 +142,6 @@ public class MainMenuScreen implements Screen {
         boneco.draw(game.batch);
         game.batch.end();
 
-        shapeRenderer.setProjectionMatrix(game.viewport.getCamera().combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-
-        shapeRenderer.setColor(Color.CYAN);
-        for (Rectangle r : obstaculosRetangulo) {
-            shapeRenderer.rect(r.x, r.y, r.width, r.height);
-        }
-
-        shapeRenderer.setColor(Color.RED);
-        for(ObstaculoCirculo obs : criaConstrucao.insereObjArray.getObjCircular()){
-            shapeRenderer.circle(obs.circle.x, obs.circle.y, obs.circle.radius);
-        }
-
-        shapeRenderer.setColor(Color.YELLOW);
-        for(Ellipse k: obstaculosElipse){
-            shapeRenderer.ellipse(k.x, k.y, k.width, k.height);
-        }
-
-        shapeRenderer.setColor(Color.GREEN);
-        shapeRenderer.rect(boneco.getX(), boneco.getY(), boneco.getWidth(), boneco.getHeight());
-        shapeRenderer.end();
-
         stage.act(delta);
         stage.draw();
     }
@@ -189,7 +162,6 @@ public class MainMenuScreen implements Screen {
     @Override
     public void dispose() {
         tela_principal.dispose();
-        shapeRenderer.dispose();
         stage.dispose();
         skin.dispose();
     }

@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.ArrayList;
 
+import static com.terminalroot.game.Controle_Diagrama_Estados.State.MENU_PRINCIPAL;
 import static com.terminalroot.game.Main.forca;
 import static com.terminalroot.game.Main.inteligencia;
 
@@ -44,6 +45,8 @@ public class Caracteristica implements Screen {
     private Label labelInteligencia;
     private Label labelForca;
 
+    Texture seta_volta;
+
     public Caracteristica(final Main game, Controle_Diagrama_Estados controle){
         this.game = game;
         this.controle = controle;
@@ -53,6 +56,7 @@ public class Caracteristica implements Screen {
         tela_principal = new Texture("Caracteristicas/basemapteste.png");
         Texture bonecoTexture = new Texture("bucket.png");
         Sprite bonecoSprite = new Sprite(bonecoTexture);
+        seta_volta = new Texture("Inventario/arrowLeft.png");
 
         obstaculosRetangulo = new ArrayList<>();
         obstaculoCirculos = new ArrayList<>();
@@ -83,6 +87,14 @@ public class Caracteristica implements Screen {
         boneco.setSize(0.5f, 0.5f);
 
         controleCaracteristica = new ControleBotao(stage, skin);
+
+        controleCaracteristica.criarBotao("", 7, 450, 60f, 2f, new Botao.AcaoBotao(){
+            @Override
+            public void executar() {
+                controle.Trocar_estado(MENU_PRINCIPAL);
+            }
+        });
+
         controleCaracteristica.criarBotao("", 4.8f, 3.4f, 0.5f, 0.5f, new Botao.AcaoBotao() {
             @Override
             public void executar() {
@@ -108,12 +120,14 @@ public class Caracteristica implements Screen {
                 if (zonainteligencia.contains(worldCoords.x, worldCoords.y) &&
                     zonainteligencia.overlaps(bonecolimite)) {
                     Main.inteligencia += 1;
+                    Main.setInteligencia(Main.inteligencia);
                     labelInteligencia.setText("Inteligencia: " + Main.inteligencia);
                     return true;
                 }
                 if (zonaforca.contains(worldCoords.x, worldCoords.y) &&
                     zonaforca.overlaps(bonecolimite)) {
                     Main.forca += 1;
+                    Main.setForca(Main.forca);
                     labelForca.setText("Forca: " + Main.forca);
                     return true;
                 }
@@ -141,6 +155,7 @@ public class Caracteristica implements Screen {
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
         game.batch.begin();
         game.batch.draw(tela_principal, 0, 0, game.viewport.getWorldWidth(), game.viewport.getWorldHeight());
+        game.batch.draw(seta_volta,0,4.5f,game.viewport.getWorldWidth() /12, game.viewport.getWorldHeight() / 12);
         boneco.draw(game.batch);
         game.batch.end();
 
