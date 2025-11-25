@@ -34,6 +34,34 @@ public class BancoMonstros {
         {8, 14, 6, 12} 
     };
 
+    private static final String[] NOMES_ANJOS = {
+        "Archangeling",
+        "Solace",
+        "Anjo Fajuto",
+        "Skeggiold",
+        "Senhora do Abrigo",
+        "Cornus",
+        "Shenime",
+        "Valquíria Ingrid",
+        "Valquíria Reginleif",
+        "Valquíria Randgris"
+    };
+
+    private static final String[] NOMES_DEMONIOS = {
+        "Deviling",
+        "Diabolik",
+        "Skogul",
+        "Andarilho",
+        "Aparicão",
+        "Tamruan",
+        "Sacerdote Maldito",
+        "Drácula",
+        "Bafomet",
+        "Belzebu"
+    };
+
+
+
     public static Monstro carregarMonstro(boolean isAnjo, int fase) {
         // protecao de indice
         if (fase < 1) fase = 1;
@@ -49,12 +77,12 @@ public class BancoMonstros {
 
         if (isAnjo) {
             // jogador anjo luta contra demonios
-            nomeMonstro = "Inimigo Infernal " + fase; // nome
+            nomeMonstro = NOMES_DEMONIOS[index]; // nome
             pastaBase = "monstros/demonios/fase" + fase; // local da textura
             configFrames = FRAMES_DEMONIOS[index];
         } else {
             // jogaddor demonio luta contra anjos
-            nomeMonstro = "Inimigo Sagrado " + fase; // nome
+            nomeMonstro = NOMES_ANJOS[index]; // nome
             pastaBase = "monstros/anjos/fase" + fase; // local da textura
             configFrames = FRAMES_ANJOS[index];
         }
