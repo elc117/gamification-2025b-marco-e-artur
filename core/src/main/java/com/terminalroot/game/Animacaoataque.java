@@ -13,16 +13,33 @@ public class Animacaoataque {
     private float x, y, w, h;
     private boolean ativo;
 
-    public Animacaoataque(String caminho, int colunas, float tempoPorFrame) {
-        textura = new Texture(Gdx.files.internal(caminho));
-        TextureRegion[][] tmp = TextureRegion.split(textura, textura.getWidth() / colunas, textura.getHeight());
-        TextureRegion[] frames = new TextureRegion[colunas];
-        for (int i = 0; i < colunas; i++) {
-            frames[i] = tmp[0][i];
+    public Animacaoataque(String caminho, int cols, int rows, float tempo) {
+        this.textura = new Texture(Gdx.files.internal(caminho));
+        this.animacao = criarAnimacaoEfeito(this.textura, cols, rows, tempo);
+        this.stateTime = 0f;
+        this.ativo = false;
+    }
+
+    public static Animation<TextureRegion> criarAnimacaoEfeito(Texture tex, int cols, int rows, float tempo) {
+
+        int frameWidth = tex.getWidth() / cols;
+        int frameHeight = tex.getHeight() / rows;
+
+        TextureRegion[][] tmp = TextureRegion.split(tex, frameWidth, frameHeight);
+
+        TextureRegion[] frames = new TextureRegion[cols * rows];
+        int index = 0;
+
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                frames[index++] = tmp[r][c];
+            }
         }
-        animacao = new Animation<>(tempoPorFrame, frames);
-        animacao.setPlayMode(Animation.PlayMode.NORMAL);
-        ativo = false;
+
+        Animation<TextureRegion> anim = new Animation<>(tempo, frames);
+        anim.setPlayMode(Animation.PlayMode.NORMAL);
+
+        return anim;
     }
 
     public void iniciar(float x, float y, float w, float h) {

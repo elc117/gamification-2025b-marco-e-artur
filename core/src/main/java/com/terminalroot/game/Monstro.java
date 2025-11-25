@@ -159,7 +159,6 @@ public class Monstro {
         return h; 
     }
 
-
     public void dispose() {
         if(texIdle != null) texIdle.dispose();
         if(texAtaque != null) texAtaque.dispose();

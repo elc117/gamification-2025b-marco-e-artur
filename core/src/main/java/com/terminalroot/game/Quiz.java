@@ -112,9 +112,9 @@ public class Quiz implements Screen {
         botA.setBounds(bx, h * 0.35f, bw, bh);
         stage.addActor(botA);
 
-        botA.getStyle().up = null; // por algum motivo isso transforma todos botões da tela em transparente, mas pelo menos não preciso transformar 1 por 1
-        botA.getStyle().down = null;
-        botA.getStyle().over = null;
+       // botA.getStyle().up = null; // por algum motivo isso transforma todos botões da tela em transparente, mas pelo menos não preciso transformar 1 por 1
+       // botA.getStyle().down = null;
+       // botA.getStyle().over = null;
 
         // Botão B
         Botao botB = new Botao("", skin, () -> {verificaresposta('B'); System.out.println('B');});

@@ -4,14 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.terminalroot.game.Animacaoataque;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Batalha implements Screen {
@@ -34,7 +31,9 @@ public class Batalha implements Screen {
     private float tempoFase = 0f;
 
     private Animation<TextureRegion> efeitoirathor, efeitometeoro, efeitoataquebasico;
-    private Texture texirathor, texmeteoro, texataquebasico;
+    private Texture texirathor = new Texture("efeitos/ira_thor.png");
+    private Texture texataquebasico = new Texture("efeitos/ataquebasico.png");
+    private Texture texmeteoro = new Texture("efeitos/meteoro.png");
     private float stateTimeEfeito;
     private boolean efeitoAtivo;
     private float efeitoX, efeitoY, efeitoW, efeitoH;
@@ -65,12 +64,12 @@ public class Batalha implements Screen {
             jogador.gastaStamina(custoStamina); // recupera a stamina
 
             // Ativa o efeito
-            efeitoAtual = animEfeito; // define a animação que vai ocorrer
-            efeitoX = monstro.getX() - 0.5f; // valores para centralizar o efeito no monstro
-            efeitoY = monstro.getY() - 0.5f;
-            efeitoW = 2f;
-            efeitoH = 2f;
+            efeitoW = 4f;
+            efeitoH = 4f;
+            efeitoX = monstro.getX() + monstro.getW() / 2f - efeitoW / 2f;
+            efeitoY = monstro.getY() * 0.60f;
 
+            efeitoAtual = animEfeito; // define a animação que vai ocorrer
             efeitoAtivo = true; // flag para ativar o efeito
             stateTimeEfeito = 0f; // reseta o tempo ded animação
 
@@ -79,8 +78,11 @@ public class Batalha implements Screen {
 
             if (!monstro.ESTADO()) { // verifica se o monstro morreu
                 System.out.println("Vitória! Monstro derrotado!"); // se morreu avança de fase e volta pro menu
-                game.avancafase();
-                controle.Trocar_estado(Controle_Diagrama_Estados.State.MENU_PRINCIPAL);
+
+                aguardandoAnimacao = true;
+                tempoEspera = 2f; // tempo para ver a "morte" do monstro (ajuste conforme necessário)
+                turnoJogador = false;
+
                 return;
             }
 
@@ -100,25 +102,25 @@ public class Batalha implements Screen {
         stage.addActor(botao);
     }
 
-    private Animation<TextureRegion> criarAnimacaoEfeito(String caminho, int colunas, float tempo) {
-        Texture tex = new Texture(Gdx.files.internal(caminho));
+    private Animation<TextureRegion> criarAnimacaoEfeito(Texture tex, int cols, int rows, float tempo) {
 
-        // Guarda para dispose depois
-        if (caminho.contains("raio"))
-            texirathor = tex;
-        else if (caminho.contains("explosao"))
-            texmeteoro = tex;
-        else if (caminho.contains("slash"))
-            texataquebasico = tex;
+        int frameWidth = tex.getWidth() / cols;
+        int frameHeight = tex.getHeight() / rows;
 
-        TextureRegion[][] tmp = TextureRegion.split(tex, tex.getWidth() / colunas, tex.getHeight());
-        TextureRegion[] frames = new TextureRegion[colunas];
-        for (int i = 0; i < colunas; i++) {
-            frames[i] = tmp[0][i];
+        TextureRegion[][] tmp = TextureRegion.split(tex, frameWidth, frameHeight);
+
+        TextureRegion[] frames = new TextureRegion[cols * rows];
+        int index = 0;
+
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                frames[index++] = tmp[r][c];
+            }
         }
 
         Animation<TextureRegion> anim = new Animation<>(tempo, frames);
         anim.setPlayMode(Animation.PlayMode.NORMAL);
+
         return anim;
     }
 
@@ -142,9 +144,9 @@ public class Batalha implements Screen {
         stage = new Stage(new ScreenViewport());
         skin = new Skin(Gdx.files.internal("ui/ui_skin.json"));
 
-        efeitoirathor = criarAnimacaoEfeito("efeitos/ira_thor.png", 56, 0.03f);
-        efeitometeoro = criarAnimacaoEfeito("efeitos/meteoro.png", 94, 0.02f);
-        efeitoataquebasico = criarAnimacaoEfeito("efeitos/ataquebasico.png", 29, 0.05f);
+        efeitoirathor = criarAnimacaoEfeito(texirathor, 10, 6, 0.02f);
+        efeitometeoro = criarAnimacaoEfeito(texmeteoro, 11, 1, 0.03f);
+        efeitoataquebasico = criarAnimacaoEfeito(texataquebasico, 4, 8, 0.05f);
 
         efeitoAtivo = false;
 
@@ -161,7 +163,7 @@ public class Batalha implements Screen {
         addBotao("", basex + espacamento + 80, baseY, (int) (jogador.getFORCA() * 2), efeitoataquebasico, 10);
         addBotao("", basex, baseY - 50, (int) (jogador.getINTELIGENCIA() * 2), efeitometeoro, 20);
 
-        Botao btnVoltar = new Botao("FUGIR", skin, () -> {
+        Botao btnVoltar = new Botao("", skin, () -> {
             controle.Trocar_estado(Controle_Diagrama_Estados.State.MENU_PRINCIPAL);
         });
 
@@ -188,6 +190,15 @@ public class Batalha implements Screen {
         if (!turnoJogador && aguardandoAnimacao) { // não é turno do jogador e está aguardando animação do monstro
             tempoEspera -= delta; // diminui o tempo de espera inicial antes do monstro começar a agir
 
+            if (!monstro.ESTADO()) {
+                if (tempoEspera <= 0) {
+                    game.avancafase();
+                    controle.Trocar_estado(Controle_Diagrama_Estados.State.MENU_PRINCIPAL);
+                    return;
+                }
+                // Não faz mais nada, só aguarda
+                
+            } else {
             // quando acabar o tempo de espera e o monstro estiver parado, inicia o
             // movimento do monstro ao jogador
             if (tempoEspera <= 0 && faseMonstro == FaseMonstro.PARADO) {
@@ -225,7 +236,7 @@ public class Batalha implements Screen {
                         }
                         break;
 
-                    case VOLTANDO:
+                    case VOLTANDO:  
                         // volta para posição original
                         if (tempoFase < 1f) { // movimentação suave para voltar
                             float progresso = tempoFase / 1f;
@@ -238,6 +249,7 @@ public class Batalha implements Screen {
                             // verifica se o jogador morreu
                             if (!jogador.ESTADO()) {
                                 System.out.println("Game Over! Você foi derrotado!");
+
                                 controle.Trocar_estado(Controle_Diagrama_Estados.State.MENU_PRINCIPAL);
                                 return;
                             }
@@ -258,6 +270,7 @@ public class Batalha implements Screen {
                 }
             }
         }
+    }
 
         // Desenha tudo
         game.viewport.apply();

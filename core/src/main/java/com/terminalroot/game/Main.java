@@ -2,6 +2,7 @@ package com.terminalroot.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -20,6 +21,7 @@ public class Main extends Game {
     public static int forca = 5;
     // tentar trazer todo o manejo de skins do inventario pra cá
     public static ItensInventario inventario = new ItensInventario();
+    
 
     public Usuario jogador;
 
@@ -35,6 +37,8 @@ public class Main extends Game {
         font = new BitmapFont();
         viewport = new FillViewport(8, 5);
         controle = new Controle_Diagrama_Estados(this);
+        
+
 
         carregarDados();
 

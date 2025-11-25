@@ -5,7 +5,7 @@ public class BancoMonstros {
     private static final int[] HP_POR_FASE =   {30, 50, 75, 100, 130, 165, 200, 240, 285, 350}; // hp dos monstros por fase
     private static final int[] DANO_POR_FASE = { 3,  5,  7,  10,  12,  15,  18,  22,  26,  30}; // dano dos monstros por fase, tabelados
 
-    // frames de cada animação 
+    // frames de cada animação (idle, ataque, dano, morte)
     
     private static final int[][] FRAMES_ANJOS = {
         {4, 28, 5, 17}, 
