@@ -20,6 +20,7 @@ public class MenuInicial implements Screen {
     private Stage stage;
     private Texture imagem_pos_video;
     private Skin skin;
+    ControleBotao controleMenuInicial;
 
     private boolean video_acabou = true;
 
@@ -36,6 +37,9 @@ public class MenuInicial implements Screen {
 
         skin = new Skin(Gdx.files.internal("ui/ui_skin.json"));
         stage = new Stage(new ScreenViewport());
+
+        controleMenuInicial = new ControleBotao(stage,skin);
+
         Gdx.input.setInputProcessor(stage);
 
         Table table = new Table();
@@ -43,14 +47,21 @@ public class MenuInicial implements Screen {
         table.top().right();
         stage.addActor(table);
 
-        Botao botaoiniciar = new Botao("Iniciar", skin, new Botao.AcaoBotao() {
+        controleMenuInicial.criarBotao("Novo Jogo", 58, 450, 60f, 2f, new Botao.AcaoBotao(){
+            @Override
+
+            public void executar() {
+                game.resetarDados();
+                controle.Trocar_estado(MENU_PRINCIPAL);
+            }
+        });
+
+        controleMenuInicial.criarBotao("Carregar Jogo", 638, 450, 60f, 2f, new Botao.AcaoBotao(){
             @Override
             public void executar() {
                 controle.Trocar_estado(MENU_PRINCIPAL);
             }
         });
-        table.add(botaoiniciar).width(100).height(50).pad(20);
-        table.row();
     }
 
     @Override

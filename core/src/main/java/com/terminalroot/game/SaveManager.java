@@ -3,10 +3,6 @@ package com.terminalroot.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
-/**
- * Gerenciador de save do jogo usando LibGDX Preferences
- * Sistema de persistência para stats, skin e progresso
- */
 public class SaveManager {
     private static final String PREFS_NAME = "meu_jogo_save";
     private Preferences prefs;
