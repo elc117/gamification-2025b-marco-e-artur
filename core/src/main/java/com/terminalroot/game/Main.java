@@ -98,6 +98,7 @@ public class Main extends Game {
         return eanjo;   
     }
 
+
     @Override
     public void render() {
         super.render(); //  atualiza e desenha a tela atual
