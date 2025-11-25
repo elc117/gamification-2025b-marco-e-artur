@@ -44,21 +44,21 @@ public class BonecoAnimacao {
                 spreedshetCaminhadaCima = new Texture("hero/Eni/cima/InteiroCima.png");
                 spreedshetCaminhadaEsquerda = new Texture("hero/Eni/esquerda/InteiroEsquerda.png");
                 spreedshetCaminhadaDireita = new Texture("hero/Eni/direita/InteiroDireita.png");
-                spreedsheetTreinoForca = new Texture("hero/Eni/Treinoforcaeni1.png");
+                spreedsheetTreinoForca = new Texture("hero/Eni/Treinoforcaeni.png");
                 break;
             case "SkinSolomonk":
                 spreedshetCaminhadaBaixo = new Texture("hero/EniSkin1/baixo/HeroBaixo.png");
                 spreedshetCaminhadaCima = new Texture("hero/EniSkin1/cima/Herocima.png");
                 spreedshetCaminhadaEsquerda = new Texture("hero/EniSkin1/esquerda/heroesquerda.png");
                 spreedshetCaminhadaDireita = new Texture("hero/EniSkin1/direita/herodireita.png");
-                spreedsheetTreinoForca = new Texture("");
+                spreedsheetTreinoForca = new Texture("hero/EniSkin1/treinoforcaeni1.png");
                 break;
             case "SkinLast":
                 spreedshetCaminhadaBaixo = new Texture("hero/EniSkin2/baixo/HeroBaixo.png");
                 spreedshetCaminhadaCima = new Texture("hero/EniSkin2/cima/Herocima.png");
                 spreedshetCaminhadaEsquerda = new Texture("hero/EniSkin2/esquerda/heroesquerda.png");
                 spreedshetCaminhadaDireita = new Texture("hero/EniSkin2/direita/herodireita.png");
-                spreedsheetTreinoForca = new Texture("");
+                spreedsheetTreinoForca = new Texture("hero/EniSkin2/treinoforcaeni2.png");
                 break;
         }
 
