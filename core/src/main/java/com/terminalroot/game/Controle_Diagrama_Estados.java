@@ -16,7 +16,8 @@ public class Controle_Diagrama_Estados {
         MENU_BATALHA,
         MENU_MOCHILA,
         MENU_ATIVIDADES_ESTUDOS,
-        MENU_FINALJOGO
+        MENU_FINALJOGO,
+        MENU_LOJA
     }
 
     private State estadoAtual;
@@ -69,6 +70,10 @@ public class Controle_Diagrama_Estados {
 
             case MENU_FINALJOGO:
                 tela_atual = new MenuFinalJogo(game,this);
+                break;
+
+            case MENU_LOJA:
+                tela_atual = new Loja(game,this);
                 break;
         }
         game.setScreen(tela_atual);

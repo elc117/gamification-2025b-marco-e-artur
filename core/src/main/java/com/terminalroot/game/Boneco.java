@@ -106,7 +106,6 @@ public class Boneco extends Sprite implements InputProcessor {
             Controle_Diagrama_Estados.State estadoDestino = Controle_Diagrama_Estados.State.valueOf(obstaculoColidido.nome);
             controle.Trocar_estado(estadoDestino);
         }
-
     }
 
     @Override

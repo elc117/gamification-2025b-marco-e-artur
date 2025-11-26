@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.ArrayList;
 
+import static com.terminalroot.game.Controle_Diagrama_Estados.State.MENU_LOJA;
 import static com.terminalroot.game.Controle_Diagrama_Estados.State.MENU_MOCHILA;
 
 public class MainMenuScreen implements Screen {
@@ -100,14 +101,7 @@ public class MainMenuScreen implements Screen {
         controleMenu.criarBotao("",7,224,18f,10f, new Botao.AcaoBotao(){
             @Override
             public void executar(){
-                System.out.println("Tela Conquista");
-            }
-        });
-
-        controleMenu.criarBotao("",7,210,18f,10f, new Botao.AcaoBotao(){
-            @Override
-            public void executar(){
-                System.out.println("Tela Alguma coisa");
+                controle.Trocar_estado(MENU_LOJA);
             }
         });
 
