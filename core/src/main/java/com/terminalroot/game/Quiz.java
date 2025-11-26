@@ -4,6 +4,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -21,6 +22,7 @@ public class Quiz implements Screen {
     private int acertos; // ainda não foi utilizado
     private Random ran = new Random();
     private Stage stage;
+    private Questao lugarbotao = new Questao("Quiz/lugarbotao.png", 'B'); // uso para posicionar os botões
 
     public Quiz(final Main game, Controle_Diagrama_Estados controle) { // construtor
         this.game = game;
@@ -103,29 +105,44 @@ public class Quiz implements Screen {
 
         float h = game.viewport.getWorldHeight();
 
-        float bw = 200;
-        float bh = 30;
-        float bx = 300;
+        float bw = 250;
+        float bh = 20;
+        float bx = 280;
+
+        
 
         // Botão A
         Botao botA = new Botao("", skin, () -> {verificaresposta('A'); System.out.println('A');});
-        botA.setBounds(bx, h * 0.35f, bw, bh);
+        botA.setBounds(bx, h * 0.28f, bw, bh);
         stage.addActor(botA);
+        botA.getStyle().up =   null;
+        botA.getStyle().down = null;
+        botA.getStyle().over = null;
+
 
         // Botão B
         Botao botB = new Botao("", skin, () -> {verificaresposta('B'); System.out.println('B');});
-        botB.setBounds(bx, h * 0.30f, bw, bh);
+        botB.setBounds(bx, h * 0.25f, bw, bh);
         stage.addActor(botB);
+
 
         // Botão C
         Botao botC = new Botao("", skin, () -> {verificaresposta('C'); System.out.println('C');});
-        botC.setBounds(bx, h * 0.25f, bw, bh);
+        botC.setBounds(bx, h * 0.22f, bw, bh);
         stage.addActor(botC);
+
 
         // Botão D
         Botao botD = new Botao("", skin, () -> {verificaresposta('D'); System.out.println('D');});
-        botD.setBounds(bx, h * 0.20f, bw, bh);
+        botD.setBounds(bx, h * 0.19f, bw, bh);
         stage.addActor(botD);
+
+        // Botão voltar
+
+        Botao botvoltar = new Botao(" Voltar", skin, () -> {finalizarQuiz();});
+        botvoltar.setBounds(0, 0, 140, 30);
+        stage.addActor(botvoltar);
+
     }
 
     public void render(float delta) { // input das respostas e renderização da questao

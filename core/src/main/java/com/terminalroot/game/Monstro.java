@@ -46,11 +46,11 @@ public class Monstro {
         else if(caminho.contains("death")) texMorte = sheet;
 
         // divide a imagem pelo número EXATO de colunas que veio da tabela no caso cada animação tem apenas uma linha e varias colunas que tive que contar uma a uma
-        TextureRegion[][] tmp = TextureRegion.split(sheet, sheet.getWidth() / colunas, sheet.getHeight());
-        TextureRegion[] frames = new TextureRegion[colunas];
+        TextureRegion[][] tmp = TextureRegion.split(sheet, sheet.getWidth() / colunas, sheet.getHeight()); // a unica diferença desse pro outro é que aqui os frames estão separados em uma linha só
+        TextureRegion[] frames = new TextureRegion[colunas]; // fiz assim pq pensei que fazer com colunas era mais dificil, mas até que não é
         
         for (int i = 0; i < colunas; i++) {
-            frames[i] = tmp[0][i];
+            frames[i] = tmp[0][i]; // pega a primeira linha e todas as colunas
         }
 
         Animation<TextureRegion> anim = new Animation<>(tempo, frames);

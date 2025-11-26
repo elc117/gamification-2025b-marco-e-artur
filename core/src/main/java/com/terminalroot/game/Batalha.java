@@ -30,9 +30,8 @@ public class Batalha implements Screen {
     private FaseMonstro faseMonstro = FaseMonstro.PARADO;
     private float tempoFase = 0f;
 
-    private Animation<TextureRegion> efeitoirathor, efeitometeoro, efeitoataquebasico;
+    private Animation<TextureRegion> efeitoirathor, efeitometeoro;
     private Texture texirathor = new Texture("efeitos/ira_thor.png");
-    private Texture texataquebasico = new Texture("efeitos/ataquebasico.png");
     private Texture texmeteoro = new Texture("efeitos/meteoro.png");
     private float stateTimeEfeito;
     private boolean efeitoAtivo;
@@ -52,7 +51,7 @@ public class Batalha implements Screen {
     }
 
     private void addBotao(String texto, float x, float y, int dano, Animation<TextureRegion> animEfeito,
-            int custoStamina) {
+            int custoStamina, boolean ehMagia) {
         Botao botao = new Botao(texto, skin, () -> {
             if (!turnoJogador || aguardandoAnimacao) // verifica se é o turno do jogador ou se alguma animação está
                                                      // acontecendo
@@ -62,6 +61,12 @@ public class Batalha implements Screen {
                 return; // cancela o ataque
             }
             jogador.gastaStamina(custoStamina); // recupera a stamina
+
+            if (ehMagia) {
+                jogador.castar(); // animação de cast para magias
+            } else {
+                jogador.atacar(); // animação de ataque físico
+            }
 
             // Ativa o efeito
             efeitoW = 4f;
@@ -102,19 +107,19 @@ public class Batalha implements Screen {
         stage.addActor(botao);
     }
 
-    private Animation<TextureRegion> criarAnimacaoEfeito(Texture tex, int cols, int rows, float tempo) {
+    private Animation<TextureRegion> criarAnimacaoEfeito(Texture tex, int colunas, int linhas, float tempo) {
 
-        int frameWidth = tex.getWidth() / cols;
-        int frameHeight = tex.getHeight() / rows;
+        int frameWidth = tex.getWidth() / colunas;
+        int frameHeight = tex.getHeight() / linhas;
 
         TextureRegion[][] tmp = TextureRegion.split(tex, frameWidth, frameHeight);
 
-        TextureRegion[] frames = new TextureRegion[cols * rows];
+        TextureRegion[] frames = new TextureRegion[colunas * linhas];
         int index = 0;
 
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                frames[index++] = tmp[r][c];
+        for (int i = 0; i < linhas; i++) { // igual o do usuario 
+            for (int j = 0; j < colunas; j++) {
+                frames[index++] = tmp[i][j];
             }
         }
 
@@ -127,9 +132,11 @@ public class Batalha implements Screen {
     public void show() {
         fundo = new Texture("batalha.png"); // campo de batalha
 
-        jogador = new Usuario("boneco.png"); // criação do personagem
-        jogador.setPosicao(1f, 1.6f); // posição do personagem
-        jogador.setTamanho(1.5f, 2f); // tamanho do personagem
+        int[] colunas = {4, 4, 4};  // idle, ataque, cast
+        int[] linhas  = {6, 8, 6};  // idle, ataque, cast
+        jogador = new Usuario("hero/Eni", colunas, linhas); // criação do personagem
+        jogador.setPosicao(0.4f, 0.6f); // posição do personagem
+        jogador.setTamanho(3f, 3.5f); // tamanho do personagem
 
         monstro = BancoMonstros.carregarMonstro(game.isEAnjo(), game.getFaseAtual()); // carrega o monstro com base na
                                                                                       // fase
@@ -146,7 +153,6 @@ public class Batalha implements Screen {
 
         efeitoirathor = criarAnimacaoEfeito(texirathor, 10, 6, 0.02f);
         efeitometeoro = criarAnimacaoEfeito(texmeteoro, 11, 1, 0.03f);
-        efeitoataquebasico = criarAnimacaoEfeito(texataquebasico, 4, 8, 0.05f);
 
         efeitoAtivo = false;
 
@@ -159,9 +165,9 @@ public class Batalha implements Screen {
         float espacamento = 160f;
         float basex = (Gdx.graphics.getWidth() / 2f) - 60;
 
-        addBotao("", basex, baseY, (jogador.getFORCA() + jogador.getINTELIGENCIA()) * 2, efeitoirathor, 60);
-        addBotao("", basex + espacamento + 80, baseY, (int) (jogador.getFORCA() * 2), efeitoataquebasico, 10);
-        addBotao("", basex, baseY - 50, (int) (jogador.getINTELIGENCIA() * 2), efeitometeoro, 20);
+        addBotao("", basex, baseY, (jogador.getFORCA() + jogador.getINTELIGENCIA()) * 2, efeitoirathor, 60,true);
+        addBotao("", basex + espacamento + 80, baseY, (int) (jogador.getFORCA() * 2), null, 10,false);
+        addBotao("", basex, baseY - 50, (int) (jogador.getINTELIGENCIA() * 2), efeitometeoro, 20,true);
 
         Botao btnVoltar = new Botao("", skin, () -> {
             controle.Trocar_estado(Controle_Diagrama_Estados.State.MENU_PRINCIPAL);
@@ -178,6 +184,7 @@ public class Batalha implements Screen {
 
         // atualiza animações
         monstro.update(delta);
+        jogador.update(delta);
 
         if (efeitoAtivo) {
             stateTimeEfeito += delta;
@@ -197,80 +204,80 @@ public class Batalha implements Screen {
                     return;
                 }
                 // Não faz mais nada, só aguarda
-                
+
             } else {
-            // quando acabar o tempo de espera e o monstro estiver parado, inicia o
-            // movimento do monstro ao jogador
-            if (tempoEspera <= 0 && faseMonstro == FaseMonstro.PARADO) {
-                faseMonstro = FaseMonstro.INDO;
-                tempoFase = 0f; // reinicia o cronometro
-            }
+                // quando acabar o tempo de espera e o monstro estiver parado, inicia o
+                // movimento do monstro ao jogador
+                if (tempoEspera <= 0 && faseMonstro == FaseMonstro.PARADO) {
+                    faseMonstro = FaseMonstro.INDO;
+                    tempoFase = 0f; // reinicia o cronometro
+                }
 
-            // se o monstro estiver em alguma fase sem ser a de parado
-            if (faseMonstro != FaseMonstro.PARADO) {
-                tempoFase += delta; // soma o tempo decorrido na fase atual
+                // se o monstro estiver em alguma fase sem ser a de parado
+                if (faseMonstro != FaseMonstro.PARADO) {
+                    tempoFase += delta; // soma o tempo decorrido na fase atual
 
-                switch (faseMonstro) {
-                    case INDO: // monstro anda até o jogodar
-                        if (tempoFase < 1f) {
-                            float progresso = tempoFase / 1f;
-                            float novaX = 5.5f - (5.5f - 1.5f) * progresso;
-                            monstro.setPosicao(novaX, 2f); // nova posição do monstro
-                        } else {
-                            monstro.setPosicao(1.5f, 2f); // ja está na posição do jogador
-                            faseMonstro = FaseMonstro.ATACANDO; // troca a fase para atacar
-                            tempoFase = 0f;
-                            monstro.atacar(); // inicia a animação de ataque
-                        }
-                        break;
-
-                    case ATACANDO:
-                        // espera a animação do ataque terminar
-                        if (monstro.animacaoAtaqueTerminou()) {
-                            // toma o dano do jogador
-                            int dano = monstro.getDANO();
-                            jogador.TOMA_DANO(dano);
-
-                            faseMonstro = FaseMonstro.VOLTANDO; // muda a fase para voltar a posição original
-                            tempoFase = 0f;
-                        }
-                        break;
-
-                    case VOLTANDO:  
-                        // volta para posição original
-                        if (tempoFase < 1f) { // movimentação suave para voltar
-                            float progresso = tempoFase / 1f;
-                            float novaX = 1.5f + (5.5f - 1.5f) * progresso;
-                            monstro.setPosicao(novaX, 2f);
-                        } else { // terminou de voltar
-                            monstro.setPosicao(5.5f, 2f); // encerra a fase do monstro
-                            faseMonstro = FaseMonstro.PARADO;
-
-                            // verifica se o jogador morreu
-                            if (!jogador.ESTADO()) {
-                                System.out.println("Game Over! Você foi derrotado!");
-
-                                controle.Trocar_estado(Controle_Diagrama_Estados.State.MENU_PRINCIPAL);
-                                return;
+                    switch (faseMonstro) {
+                        case INDO: // monstro anda até o jogodar
+                            if (tempoFase < 1f) {
+                                float progresso = tempoFase / 1f;
+                                float novaX = 5.5f - (5.5f - 1.5f) * progresso;
+                                monstro.setPosicao(novaX, 2f); // nova posição do monstro
+                            } else {
+                                monstro.setPosicao(1.5f, 2f); // ja está na posição do jogador
+                                faseMonstro = FaseMonstro.ATACANDO; // troca a fase para atacar
+                                tempoFase = 0f;
+                                monstro.atacar(); // inicia a animação de ataque
                             }
+                            break;
 
-                            // passa o turno para o jogador
-                            jogador.recuperaStamina();
+                        case ATACANDO:
+                            // espera a animação do ataque terminar
+                            if (monstro.animacaoAtaqueTerminou()) {
+                                // toma o dano do jogador
+                                int dano = monstro.getDANO();
+                                jogador.TOMA_DANO(dano);
 
-                            aguardandoAnimacao = false;
-                            turnoJogador = true;
-                        }
-                        break;
-                    case PARADO:
-                        // não faz nada
-                        break;
+                                faseMonstro = FaseMonstro.VOLTANDO; // muda a fase para voltar a posição original
+                                tempoFase = 0f;
+                            }
+                            break;
 
-                    default:
-                        break;
+                        case VOLTANDO:
+                            // volta para posição original
+                            if (tempoFase < 1f) { // movimentação suave para voltar
+                                float progresso = tempoFase / 1f;
+                                float novaX = 1.5f + (5.5f - 1.5f) * progresso;
+                                monstro.setPosicao(novaX, 2f);
+                            } else { // terminou de voltar
+                                monstro.setPosicao(5.5f, 2f); // encerra a fase do monstro
+                                faseMonstro = FaseMonstro.PARADO;
+
+                                // verifica se o jogador morreu
+                                if (!jogador.ESTADO()) {
+                                    System.out.println("Game Over! Você foi derrotado!");
+
+                                    controle.Trocar_estado(Controle_Diagrama_Estados.State.MENU_PRINCIPAL);
+                                    return;
+                                }
+
+                                // passa o turno para o jogador
+                                jogador.recuperaStamina();
+
+                                aguardandoAnimacao = false;
+                                turnoJogador = true;
+                            }
+                            break;
+                        case PARADO:
+                            // não faz nada
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
             }
         }
-    }
 
         // Desenha tudo
         game.viewport.apply();
@@ -327,8 +334,6 @@ public class Batalha implements Screen {
             texirathor.dispose();
         if (texmeteoro != null)
             texmeteoro.dispose();
-        if (texataquebasico != null)
-            texataquebasico.dispose();
     }
 
     @Override
