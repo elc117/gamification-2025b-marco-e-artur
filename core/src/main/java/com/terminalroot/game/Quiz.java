@@ -27,8 +27,8 @@ public class Quiz implements Screen {
         this.controle = controle;
         this.questaoAtual = ran.nextInt(10); // numero aleatório de 1 a 10
         this.acertos = 0;
-        game.viewport = new FillViewport(1280, 720, new OrthographicCamera());
 
+        game.viewport = new FillViewport(1280, 720, new OrthographicCamera());
     }
 
     private void carregarQuestao() {
@@ -112,10 +112,6 @@ public class Quiz implements Screen {
         botA.setBounds(bx, h * 0.35f, bw, bh);
         stage.addActor(botA);
 
-       // botA.getStyle().up = null; // por algum motivo isso transforma todos botões da tela em transparente, mas pelo menos não preciso transformar 1 por 1
-       // botA.getStyle().down = null;
-       // botA.getStyle().over = null;
-
         // Botão B
         Botao botB = new Botao("", skin, () -> {verificaresposta('B'); System.out.println('B');});
         botB.setBounds(bx, h * 0.30f, bw, bh);
@@ -153,6 +149,8 @@ public class Quiz implements Screen {
 
         game.batch.end();
 
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override
