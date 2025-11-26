@@ -66,6 +66,7 @@ public class Controle_Diagrama_Estados {
             case MENU_ATIVIDADES_ESTUDOS:
                 tela_atual = new AtividadesEstudos(game, this);
                 break;
+
             case MENU_FINALJOGO:
                 tela_atual = new MenuFinalJogo(game,this);
                 break;

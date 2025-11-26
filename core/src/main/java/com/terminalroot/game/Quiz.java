@@ -30,7 +30,7 @@ public class Quiz implements Screen {
         this.questaoAtual = ran.nextInt(10); // numero aleatório de 1 a 10
         this.acertos = 0;
 
-        game.viewport = new FillViewport(1280, 720, new OrthographicCamera());
+        game.viewport.update(1280,720,true);
     }
 
     private void carregarQuestao() {
@@ -109,7 +109,7 @@ public class Quiz implements Screen {
         float bh = 20;
         float bx = 280;
 
-        
+
 
         // Botão A
         Botao botA = new Botao("", skin, () -> {verificaresposta('A'); System.out.println('A');});

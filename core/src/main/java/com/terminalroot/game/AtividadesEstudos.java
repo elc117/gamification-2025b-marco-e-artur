@@ -9,7 +9,10 @@ import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 
 import java.util.ArrayList;
 
@@ -36,6 +39,8 @@ public class AtividadesEstudos implements Screen {
     private Stage stage;
     private Skin skin;
     Texture seta_volta;
+
+    private Music musica;
 
     public AtividadesEstudos(final Main game, Controle_Diagrama_Estados controle){
         this.game = game;
@@ -78,9 +83,15 @@ public class AtividadesEstudos implements Screen {
         multiplexer.addProcessor(stage);
         multiplexer.addProcessor(boneco);
         Gdx.input.setInputProcessor(multiplexer);
+
+        musica = Gdx.audio.newMusic(Gdx.files.internal("Musicas/Sombiblioteca.mp3"));
+        musica.setLooping(true);
+        musica.setVolume(0.5f);
+        musica.play();
     }
 
     public void render(float delta){
+        ScreenUtils.clear(Color.BLACK);
         game.batch.begin();
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
         game.batch.draw(basemap, 0, 0, game.viewport.getWorldWidth(), game.viewport.getWorldHeight());
