@@ -2,6 +2,7 @@ package com.terminalroot.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -43,6 +44,8 @@ public class Batalha implements Screen {
 
     private Stage stage;
     private Skin skin;
+
+    private Music musica;
 
     public Batalha(final Main game, Controle_Diagrama_Estados controle) {
         this.game = game;
@@ -131,6 +134,12 @@ public class Batalha implements Screen {
 
     public void show() {
         fundo = new Texture("batalha.png"); // campo de batalha
+
+        // Teste musica
+        musica = Gdx.audio.newMusic(Gdx.files.internal("Musicas/Musicabattle.mp3"));
+        musica.setLooping(true);
+        musica.setVolume(0.5f);
+        musica.play();
 
         int[] colunas = {4, 4, 4};  // idle, ataque, cast
         int[] linhas  = {6, 8, 6};  // idle, ataque, cast
@@ -316,6 +325,9 @@ public class Batalha implements Screen {
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
+        if (musica != null) {
+            musica.stop(); // teste p parar a musica, aparentemente é isos q tem q chamar
+        }
     }
 
     @Override

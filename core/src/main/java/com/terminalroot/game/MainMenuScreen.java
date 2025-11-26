@@ -2,6 +2,7 @@ package com.terminalroot.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -41,6 +42,9 @@ public class MainMenuScreen implements Screen {
     private Skin skin;
     private ControleBotao controleMenu;
 
+    // Teste musica
+    private Music musica;
+
     public MainMenuScreen(final Main game, Controle_Diagrama_Estados controle) {
         this.game = game;
         this.controle = controle;
@@ -51,6 +55,12 @@ public class MainMenuScreen implements Screen {
         tela_principal = new Texture("mapafinal.png");
         Texture bonecoTexture = new Texture("bucket.png");
         Sprite bonecoSprite = new Sprite(bonecoTexture);
+
+        //Teste musica
+        musica = Gdx.audio.newMusic(Gdx.files.internal("Musicas/MusicaMainmenu.mp3"));
+        musica.setLooping(true);
+        musica.setVolume(0.5f);
+        musica.play();
 
         // Definição dos Arrays de obstaculos no Menu Principal, precisa passar como argumento em criaConstrucao agora
         obstaculosRetangulo = new ArrayList<>();
@@ -141,11 +151,16 @@ public class MainMenuScreen implements Screen {
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null); // Teste, aparentemente precisa disso quando troca de tela
+        if (musica != null) {
+            musica.stop(); // teste p parar a musica, aparentemente é isos q tem q chamar
+        }
     }
+
     @Override
     public void dispose() {
         tela_principal.dispose();
         stage.dispose();
         skin.dispose();
+        musica.dispose();
     }
 }
