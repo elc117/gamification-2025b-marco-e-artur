@@ -83,6 +83,10 @@ public class Boneco extends Sprite implements InputProcessor {
             direcao = "luta";
             movimento = true;
         }
+        if(AtividadesEstudos.TreinandoInteligencia == true){
+            direcao = "estudo";
+            movimento = true;
+        }
         animation.update(Gdx.graphics.getDeltaTime(), direcao, movimento);
 
         boolean colidiuRetangulo = false;
