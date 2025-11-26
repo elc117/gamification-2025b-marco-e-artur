@@ -13,9 +13,9 @@ public class Animacaoataque {
     private float x, y, w, h; // cordenadas e dimensoes 
     private boolean ativo; // flag para saber se ta ativo ou não
 
-    public Animacaoataque(String caminho, int cols, int rows, float tempo) { // construtor da classe de animação de ataque
+    public Animacaoataque(String caminho, int colunas, int linhas, float tempo) { // construtor da classe de animação de ataque
         this.textura = new Texture(Gdx.files.internal(caminho)); // carrega a texxtura
-        this.animacao = criarAnimacaoEfeito(this.textura, cols, rows, tempo); // cria a animação
+        this.animacao = criarAnimacaoEfeito(this.textura, colunas, linhas, tempo); // cria a animação
         this.stateTime = 0f; // seta o tempo inicial
         this.ativo = false; // seta como inativo
     }

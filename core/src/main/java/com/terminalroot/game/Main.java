@@ -19,6 +19,7 @@ public class Main extends Game {
     public static String SkinBoneco = "SkinBasica";
     public static int inteligencia = 5;
     public static int forca = 5;
+    public static int moedas = 0;
     // tentar trazer todo o manejo de skins do inventario pra cá
     public static ItensInventario inventario = new ItensInventario();
 
@@ -55,11 +56,13 @@ public class Main extends Game {
             forca = save.getForca();
             inteligencia = save.getInteligencia();
             SkinBoneco = save.getSkinBoneco();
+            moedas = save.getMoedas();
 
             Gdx.app.log("Main", "=== Dados Carregados ===");
             Gdx.app.log("Main", "Força: " + forca);
             Gdx.app.log("Main", "Inteligência: " + inteligencia);
             Gdx.app.log("Main", "Skin: " + SkinBoneco);
+            Gdx.app.log("Main", "moedas: " + moedas);
         } else {
             Gdx.app.log("Main", "Nenhum save encontrado. Usando valores padrão.");
             // Salva os valores padrão
@@ -69,25 +72,26 @@ public class Main extends Game {
 
     public void salvarDados() {
         SaveManager save = SaveManager.getInstance();
-        save.salvarTudo(forca, inteligencia, SkinBoneco);
+        save.salvarTudo(forca, inteligencia, SkinBoneco, moedas);
         Gdx.app.log("Main", "Dados salvos com sucesso!");
     }
 
     public static void setForca(int novaForca) {
         forca = novaForca;
-        SaveManager.getInstance().salvarStats(forca, inteligencia);
+        SaveManager.getInstance().salvarStats(forca, inteligencia, moedas);
     }
 
      // Atualiza apenas a inteligência e salva
     public static void setInteligencia(int novaInteligencia) {
         inteligencia = novaInteligencia;
-        SaveManager.getInstance().salvarStats(forca, inteligencia);
+        SaveManager.getInstance().salvarStats(forca, inteligencia, moedas);
     }
 
     public void resetarDados(){
         forca = 5;
         inteligencia = 5;
         SkinBoneco = "SkinBasica";
+        moedas = 0;
     }
 
     public boolean isEAnjo(){

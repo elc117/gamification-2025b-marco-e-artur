@@ -11,6 +11,9 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+
+import static com.terminalroot.game.Main.moedas;
+
 import java.util.*;
 
 public class Quiz implements Screen {
@@ -30,21 +33,21 @@ public class Quiz implements Screen {
         this.questaoAtual = ran.nextInt(10); // numero aleatório de 1 a 10
         this.acertos = 0;
 
-        game.viewport.update(1280,720,true);
+        game.viewport = new FillViewport(1280, 720, new OrthographicCamera());
     }
 
     private void carregarQuestao() {
-        if (questaoAtual >= BancoQuestoes.questoes.length) {
-            finalizarQuiz();
+        if (questaoAtual >= BancoQuestoes.questoes.length) { // se o indice da questao for maior que o tamanho do banco, finaliza o quiz
+            finalizarQuiz(); 
             return;
         }
 
-        if (imagemQuestao != null) {
+        if (imagemQuestao != null) { // se ja tiver uma imagem carregada, descarrega ela antes
             imagemQuestao.dispose();
         }
 
         Questao questao = BancoQuestoes.questoes[questaoAtual]; // carrega as questões
-        imagemQuestao = new Texture(Gdx.files.internal(questao.imagem));
+        imagemQuestao = new Texture(Gdx.files.internal(questao.imagem)); // carrega a imagem da questao
     }
 
     private void novaquestaoaleatoria(){
@@ -75,8 +78,9 @@ public class Quiz implements Screen {
     private void verificaresposta(char resposta) { // verifica a resposta
         Questao questao = BancoQuestoes.questoes[questaoAtual];
 
-        if (questao.estaCorreta(resposta)) {
+        if (questao.estaCorreta(resposta)) { // auto explicativo
             acertos++;
+            moedas += 1;
             System.out.println("Acertou");
         } else {
             System.out.println("Errou");
@@ -86,7 +90,7 @@ public class Quiz implements Screen {
 
         novaquestaoaleatoria(); // pega outra aleatória
 
-        System.out.println(acertos + "/10");
+        System.out.println(acertos + "/10"); 
 
     }
 
@@ -96,8 +100,8 @@ public class Quiz implements Screen {
 
 
     public void show() {
-        System.out.println("Tela: " + this.getClass().getSimpleName() + " foi mostrada!");
-        carregarQuestao();
+        System.out.println("Tela: " + this.getClass().getSimpleName() + " foi mostrada!"); // debug
+        carregarQuestao(); // carrega a questão inicial
 
         Skin skin = new Skin(Gdx.files.internal("ui/ui_skin.json"));
         stage = new Stage(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
@@ -109,13 +113,13 @@ public class Quiz implements Screen {
         float bh = 20;
         float bx = 280;
 
-
+        
 
         // Botão A
-        Botao botA = new Botao("", skin, () -> {verificaresposta('A'); System.out.println('A');});
+        Botao botA = new Botao("", skin, () -> {verificaresposta('A'); System.out.println('A');}); // cada botão chama o método que verifica
         botA.setBounds(bx, h * 0.28f, bw, bh);
         stage.addActor(botA);
-        botA.getStyle().up =   null;
+        botA.getStyle().up =   null; // deixa os botões invisiveis
         botA.getStyle().down = null;
         botA.getStyle().over = null;
 
@@ -152,9 +156,12 @@ public class Quiz implements Screen {
         game.batch.begin();
 
         if (imagemQuestao != null) { // isso serve só pra aparecer na tela e dar um resize caso tu aumente o tamanho da janela.
-             // aconselho aumentar o tamanho na janela pq se não fica ruim de ler
-            float width = imagemQuestao.getWidth();
-            float height = imagemQuestao.getHeight();
+            float scale = Math.min( // até que não precisaria disso, pq a viewport já faz o resize, mas como eu ja tinha feito e se eu tirar os botões ficam no lugar errado, é melhor não tirar
+                game.viewport.getWorldWidth() / (float) imagemQuestao.getWidth(),
+                game.viewport.getWorldHeight() / (float) imagemQuestao.getHeight());
+
+            float width = imagemQuestao.getWidth() * scale;
+            float height = imagemQuestao.getHeight() * scale;
             float x = (game.viewport.getWorldWidth() - width) / 2;
             float y = (game.viewport.getWorldHeight() - height) / 2;
 

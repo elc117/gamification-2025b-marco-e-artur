@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import static com.terminalroot.game.Main.moedas;
 
 public class Batalha implements Screen {
     final Main game;
@@ -85,7 +86,7 @@ public class Batalha implements Screen {
             System.out.println(texto + " → dano " + dano + " | HP Monstro: " + monstro.getHP()); // debug
 
             if (!monstro.ESTADO()) { // verifica se o monstro morreu
-                System.out.println("Vitória! Monstro derrotado!"); // se morreu avança de fase e volta pro menu
+                System.out.println("Vitória! Monstro derrotado!"); 
 
                 aguardandoAnimacao = true;
                 tempoEspera = 2f; // tempo para ver a "morte" do monstro (ajuste conforme necessário)
@@ -208,6 +209,7 @@ public class Batalha implements Screen {
 
             if (!monstro.ESTADO()) {
                 if (tempoEspera <= 0) {
+                    moedas += SaveManager.getInstance().getDiaAtual(); // recompensa em moedas baseada na fase/dia 
                     SaveManager.getInstance().avancarDia();
                     controle.Trocar_estado(Controle_Diagrama_Estados.State.MENU_PRINCIPAL);
                     return;
