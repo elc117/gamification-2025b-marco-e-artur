@@ -3,6 +3,9 @@ package com.terminalroot.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import java.util.Date;
+
+import static com.terminalroot.game.Main.moedas;
+
 import java.util.Calendar;
 
 public class SaveManager {
@@ -25,11 +28,12 @@ public class SaveManager {
 
     // ===== SAVE - STATS E SKIN =====
 
-    public void salvarStats(int forca, int inteligencia) {
+    public void salvarStats(int forca, int inteligencia, int moedas) {
         prefs.putInteger("forca", forca);
         prefs.putInteger("inteligencia", inteligencia);
+        prefs.putInteger("moedas", moedas);
         prefs.flush();
-        Gdx.app.log("SaveManager", "Stats salvos: Força=" + forca + ", Inteligência=" + inteligencia);
+        Gdx.app.log("SaveManager", "Stats salvos: Força=" + forca + ", Inteligência=" + inteligencia + "Moedas=" + moedas);
     }
 
     public void salvarSkin(String skinBoneco) {
@@ -38,10 +42,11 @@ public class SaveManager {
         Gdx.app.log("SaveManager", "Skin salva: " + skinBoneco);
     }
 
-    public void salvarTudo(int forca, int inteligencia, String skinBoneco) {
+    public void salvarTudo(int forca, int inteligencia, String skinBoneco, int moedas) {
         prefs.putInteger("forca", forca);
         prefs.putInteger("inteligencia", inteligencia);
         prefs.putString("skin_boneco", skinBoneco);
+        prefs.putInteger("moedas", moedas);
         prefs.flush();
         Gdx.app.log("SaveManager", "Dados completos salvos");
     }
@@ -103,6 +108,8 @@ public class SaveManager {
         return prefs.getString("skin_boneco", "SkinSolomonk");
     }
 
+    
+
     // ===== LOAD - PROGRESSO =====
 
     public int getNivelAtual() {
@@ -114,13 +121,20 @@ public class SaveManager {
     }
 
     public boolean existeSave() {
-        return prefs.contains("forca") || prefs.contains("nivel_atual");
+        return prefs.contains("forca") || prefs.contains("nivel_atual") || prefs.contains("moedas");
+    }
+
+    //  LOAD - MOEDA 
+
+     public int getMoedas() {
+        return prefs.getInteger("moedas", 0);
     }
 
     public void resetarStats() {
         prefs.putInteger("forca", 5);
         prefs.putInteger("inteligencia", 5);
         prefs.putString("skin_boneco", "SkinSolomonk");
+        prefs.putInteger("moedas", 0);
         prefs.flush();
         Gdx.app.log("SaveManager", "Stats resetados para valores padrão");
     }
