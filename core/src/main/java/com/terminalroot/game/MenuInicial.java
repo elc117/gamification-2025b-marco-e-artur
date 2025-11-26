@@ -18,7 +18,6 @@ public class MenuInicial implements Screen {
     final Controle_Diagrama_Estados controle;
 
     private Stage stage;
-    private Texture imagem_pos_video;
     private Skin skin;
     ControleBotao controleMenuInicial;
 
@@ -31,7 +30,6 @@ public class MenuInicial implements Screen {
 
     @Override
     public void show(){
-        imagem_pos_video = new Texture(Gdx.files.internal("Imagem_final.png"));
 
         video_acabou = true;
 
@@ -74,10 +72,6 @@ public class MenuInicial implements Screen {
 
             game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
             game.batch.begin();
-            game.batch.draw(imagem_pos_video,
-                0, 0,
-                game.viewport.getWorldWidth(),
-                game.viewport.getWorldHeight());
             game.batch.end();
 
             stage.act(delta);
@@ -102,7 +96,6 @@ public class MenuInicial implements Screen {
 
     @Override
     public void dispose() {
-        if (imagem_pos_video != null) imagem_pos_video.dispose();
         if (stage != null) stage.dispose();
         if (skin != null) skin.dispose();
     }
