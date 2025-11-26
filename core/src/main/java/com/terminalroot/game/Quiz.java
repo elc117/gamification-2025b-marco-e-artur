@@ -152,12 +152,9 @@ public class Quiz implements Screen {
         game.batch.begin();
 
         if (imagemQuestao != null) { // isso serve só pra aparecer na tela e dar um resize caso tu aumente o tamanho da janela.
-            float scale = Math.min( // aconselho aumentar o tamanho na janela pq se não fica ruim de ler
-                game.viewport.getWorldWidth() / (float) imagemQuestao.getWidth(),
-                game.viewport.getWorldHeight() / (float) imagemQuestao.getHeight());
-
-            float width = imagemQuestao.getWidth() * scale;
-            float height = imagemQuestao.getHeight() * scale;
+             // aconselho aumentar o tamanho na janela pq se não fica ruim de ler
+            float width = imagemQuestao.getWidth();
+            float height = imagemQuestao.getHeight();
             float x = (game.viewport.getWorldWidth() - width) / 2;
             float y = (game.viewport.getWorldHeight() - height) / 2;
 

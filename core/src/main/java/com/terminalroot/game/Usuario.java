@@ -65,7 +65,8 @@ public class Usuario {
                 sheet.getHeight() / linhas); // divide a imagem pegando o tamanho da sprite sheet e dividindo pelo numero de colunas e linhas
 
         // cria array com todos os frames 
-        TextureRegion[] frames = new TextureRegion[totalFrames];
+        TextureRegion[] frames = new TextureRegion[totalFrames]; // aqui estava dando erro pq algumas animações não tinham todos os frames, sem saber oq fazer perguntei ao chatgpt
+        // percebi que o que estava acontecendo era que ele estava tentando acessar indices invalidos do array, a solução foi criar uma condição para parar de preencher quando o indice fosse igual ou maior que o total de frames
         int index = 0; // indice para preencher o array
         outerLoop:
         for (int i = 0; i < linhas; i++) {
