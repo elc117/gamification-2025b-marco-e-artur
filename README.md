@@ -1,10 +1,64 @@
-## Diagrama de estados
-![Diagrama de Estados](rdme_material/diagrama_estados.png)
+#### Identificação : Marco Antonio da Rosa Soares (SI), Artur Fardin Corrêa (CC)
+
+##### Resumo do projeto:
+
+Nossa ideia era criar um aplicativo onde as pessoas se incentivassem a ter hábitos saudáveis e importantes para o desenvolvimento pessoal. O jogo conta com um sistema de progressão que é adquirido realizando tarefas como exercício físico, horas de estudo, horas de sono e quizzes. Há um sistema onde você precisa realizar essas atividades a fim de melhorar seu personagem e lutar contra monstros mais fortes a cada fase. O aplicativo também possui sistema de inventário, onde é possível gerenciar skins e armamentos, além de permitir escolher entre 2 facções, onde a facção determinará os monstros que serão enfrentados. O objetivo do projeto é incentivar as pessoas a praticarem hábitos saudáveis e se desenvolverem pessoalmente. A gamificação é apenas um motivador para que essas tarefas sejam cumpridas.
+
+##### Processo de desenvolvimento, dificuldades e afins:
+
+#### Artur:
+Eu fiquei responsável por fazer o sistema de batalha, incluindo as animações presentes no sistema e o quiz. Tivemos alguns problemas técnicos, pois criamos o projeto sem suporte a HTML, o que consumiu um tempo considerável para arrumar tudo (graças ao Marco deu tudo certo). A minha maior dificuldade, acho, foi a criação do sistema de turnos, mas após olhar alguns exemplos e vídeos na internet mostrando como fazer, entendi melhor o que deveria ser feito.
+
+Outra coisa que me tirou o sono foram as animações. Eu acredito que não fiz da maneira mais correta, já que as classes de usuário, ataque e monstro possuem métodos de criação de animações diferentes, alguns adaptados para o estilo de sprite sheet utilizado. No caso dos monstros, são sprite sheets de uma linha só, e as demais animações são feitas usando colunas e linhas. Fiz isso porque, quando comecei, achei que seria mais fácil padronizar todas as sprites e utilizar apenas na forma horizontal. Isso ocasionou um problema sério, pois aparentemente o LibGDX não suporta arquivos de dimensões gigantescas, como por exemplo sprite sheets horizontais de habilidades. Algumas tinham mais de 60 sprites, o que tornava a imagem com mais de 60 mil pixels de largura, e isso resultava em um erro que transformava a animação em um quadrado preto. Isso foi solucionado quando utilizei sprites quadradas, com linhas e colunas.
+
+<img width="400" height="300" alt="image" src="https://github.com/user-attachments/assets/35c528e4-988f-414f-8e01-9b2366542c82" />
+
+
+Só que não deixa de ser um erro criar estilos diferentes; o certo seria tentar padronizar o método de criação de animações e, se necessário, usar um @override no método. Mas na hora eu nem pensei nisso, só queria que funcionasse — porém isso não é o ideal. Percebi isso quando olhei essas classes como um todo, após estarem prontas.
+
+Outra parte muito chata das animações foi a criação dos sprites. Como eu provavelmente fiz da forma menos inteligente possível, muita coisa tive que fazer na mão, como contar as colunas, as linhas e os frames totais de cada animação. Isso consumiu bastante tempo, mas deu certo. O que ajudou foi a utilização da classe ENUM, que me permitiu criar constantes com a quantidade de frames de cada animação, os quais tive que contar um por um para todos os monstros.
+
+As barras de HP e os nomes foram divertidos de fazer. A lógica que utilizei foi bem simples: criei retângulos e fui modificando eles com base na vida atual do monstro/jogador.
+
+O quiz foi bem simples de fazer. Criei um banco de questões com o caminho da imagem da questão e sua resposta. Eu fui ver sobre ENUM depois de fazer o quiz, mas acho que dava para ter criado usando ele. O quiz basicamente é um monte de imagens de cada questão que o Marco elaborou, e eu fiz elas usando o Photoshop. O banco de questões é uma lista de objetos; a única coisa que precisei fazer foi gerar um número aleatório e usar como índice da lista. Os botões foram um problema, pois as questões variavam de tamanho, então tive que refazer todas elas e padronizar a posição das alternativas para poder criar botões invisíveis nelas e validar a resposta do usuário. Por algum motivo, quando aumentamos a tela, os botões param de funcionar, mas acabei não indo atrás disso.
+
+Outra parte que tive que aprender, mesmo não sendo diretamente relacionada à programação orientada a objetos, foi como conseguir as animações dos monstros. Como o Ragnarok não trabalha usando pastas para guardar as skins, eles utilizam um tipo próprio de arquivo (data.grf) que guarda as informações e animações do jogo. Infelizmente, não dava para transformar diretamente em sprite sheets, então tive que fazê-las à mão. E o pior é que as animações de habilidade que eu queria usar eram de outro tipo de arquivo totalmente diferente também. Então, acredito que foi legal explorar esses problemas.
+
+#### Marco:
+
+
+
+
+## Criação de imagens, animações e música:
+A criação das animações foi feita utilizando IA generativa, a https://www.godmodeai.co/
+. Ela gerou sprites com fundo transparente que usamos para montar as animações. As animações dos monstros foram retiradas do jogo Ragnarok, um MMORPG famoso que se encaixava na temática escolhida. Fora isso, utilizamos alguns assets das bibliotecas do itch.io, e as músicas foram retiradas do YouTube. Colocaremos os links nas referências.
 
 ## Diagrama de classes
 ![Diagrama de Estados](rdme_material/diagrama_classe.png)
 
-## Processo de Desenvolvimento
+## Diagrama de estados
+![Diagrama de Estados](rdme_material/diagrama_estados.png)
+
+
+### Dependências:
+
+- [LibGDX] (https://libgdx.com)
+- [Java] (https://www.java.com)
+
+### Orientações para execução local:
+
+1- Dar git clone no Link do projeto.
+
+2- Dar 2 cliques no arquivo Lwjgl3Launcher.java
+<img width="1593" height="161" alt="image" src="https://github.com/user-attachments/assets/8e0c4b9c-a3be-432f-a40e-cdb7e4f35170" />
+
+
+### Video de execução na WEB:
+
+
+
+
+<!-- ## Processo de Desenvolvimento 
 # 20/10
 (Marco) Prática utilizando o tutorial https://www.youtube.com/watch?v=aipDYyh1Mlc&t=893s para entender um pouco mais da biblioteca.
 
@@ -27,4 +81,37 @@
 (Artur) Quiz 90% pronto, só falta adicionar a lógica de uma questão por dia, talvez tenha algumas coisas pra melhorar, como a escolha de questões aleatórias.
 
 # 06/11 ~~ XX 
-(Artur) Inicio do sistema de batalha e animação dos monstros.
+(Artur) Inicio do sistema de batalha e animação dos monstros. -->
+
+
+### Refêrencias:
+
+Inteligência artificial: foi utilizado principalmente na criação de animações, refatoração e resolução de erros, assim como no readme para corrigir erros de português.
+
+- [ChatGPT](https://chatgpt.com/)
+- [Claude](https://claude.ai/)
+- [Gemini](https://gemini.google.com/)
+- [GodmodeAi](https://www.godmodeai.co/)
+
+Prompts utilizados:
+- "porque o botão de voltar está invisivel"
+- "porque a animação de efeito está ficando preta ?"
+
+
+
+Ferramentas para manipulação de imagens e criação de spritesheets:
+
+- [Piskel](https://www.piskelapp.com/)
+- [Background remover](https://www.remove.bg/pt-br)
+- [Biblioteca de assets](https://itch.io/game-assets/tag-spritesheet)
+- [Calculadora regra de 3](https://www.4devs.com.br/calculadora_regra_tres_simples): utilizado para posicionar elementos na tela.
+- [Gif to SpriteSheet](https://onlinegiftools.com/convert-gif-to-sprite-sheet)
+
+1- https://www.reddit.com/r/learnprogramming/comments/4wcdex/help_with_turnbased_combat_in_gui_java/
+
+2- https://github.com/ThierrirAlencar/Pkm_libgdx_BattleSimulator
+
+3- https://gamedev.stackexchange.com/questions/136659/is-it-possible-to-use-animated-gif-images-in-lbgdx (foi utilizado mas percebemos que não era tão eficaz, mas é interessante)
+
+4- https://www.youtube.com/watch?v=wtnMKSPQToA&t=1314s
+
