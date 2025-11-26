@@ -117,7 +117,7 @@ public class Batalha implements Screen {
         TextureRegion[] frames = new TextureRegion[colunas * linhas];
         int index = 0;
 
-        for (int i = 0; i < linhas; i++) { // igual o do usuario 
+        for (int i = 0; i < linhas; i++) { // igual o do usuario
             for (int j = 0; j < colunas; j++) {
                 frames[index++] = tmp[i][j];
             }
@@ -138,7 +138,7 @@ public class Batalha implements Screen {
         jogador.setPosicao(0.4f, 0.6f); // posição do personagem
         jogador.setTamanho(3f, 3.5f); // tamanho do personagem
 
-        monstro = BancoMonstros.carregarMonstro(game.isEAnjo(), game.getFaseAtual()); // carrega o monstro com base na
+        monstro = BancoMonstros.carregarMonstro(game.isEAnjo(), SaveManager.getInstance().getDiaAtual()); // carrega o monstro com base na
                                                                                       // fase
         hud = new Hpenome(game);
 
@@ -199,7 +199,7 @@ public class Batalha implements Screen {
 
             if (!monstro.ESTADO()) {
                 if (tempoEspera <= 0) {
-                    game.avancafase();
+                    SaveManager.getInstance().avancarDia();
                     controle.Trocar_estado(Controle_Diagrama_Estados.State.MENU_PRINCIPAL);
                     return;
                 }

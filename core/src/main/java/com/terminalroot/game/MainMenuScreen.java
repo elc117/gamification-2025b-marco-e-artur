@@ -104,23 +104,7 @@ public class MainMenuScreen implements Screen {
         controleMenu.criarBotao("",7,196,18f,10f, new Botao.AcaoBotao(){
             @Override
             public void executar(){
-                System.out.println("Tela Inventario");
                 controle.Trocar_estado(MENU_MOCHILA);
-            }
-        });
-
-
-        controleMenu.criarBotao("",7,182,18f,10f, new Botao.AcaoBotao(){
-            @Override
-            public void executar(){
-                System.out.println("Tela Mapa");
-            }
-        });
-
-        controleMenu.criarBotao("",7,178,18f,10f, new Botao.AcaoBotao(){
-            @Override
-            public void executar(){
-                System.out.println("Tela Sonhos");
             }
         });
 

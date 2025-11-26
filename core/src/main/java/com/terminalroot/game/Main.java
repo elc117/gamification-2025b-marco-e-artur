@@ -21,7 +21,7 @@ public class Main extends Game {
     public static int forca = 5;
     // tentar trazer todo o manejo de skins do inventario pra cá
     public static ItensInventario inventario = new ItensInventario();
-    
+
 
     public Usuario jogador;
 
@@ -37,7 +37,7 @@ public class Main extends Game {
         font = new BitmapFont();
         viewport = new FillViewport(8, 5);
         controle = new Controle_Diagrama_Estados(this);
-        
+
 
 
         carregarDados();
@@ -90,16 +90,8 @@ public class Main extends Game {
         SkinBoneco = "SkinBasica";
     }
 
-    public void avancafase(){
-        fase_atual++;
-    }
-
-    public int getFaseAtual(){
-        return fase_atual;
-    }
-
     public boolean isEAnjo(){
-        return eanjo;   
+        return eanjo;
     }
 
 

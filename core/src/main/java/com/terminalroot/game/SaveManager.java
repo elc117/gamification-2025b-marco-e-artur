@@ -2,6 +2,8 @@ package com.terminalroot.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import java.util.Date;
+import java.util.Calendar;
 
 public class SaveManager {
     private static final String PREFS_NAME = "meu_jogo_save";
@@ -42,6 +44,49 @@ public class SaveManager {
         prefs.putString("skin_boneco", skinBoneco);
         prefs.flush();
         Gdx.app.log("SaveManager", "Dados completos salvos");
+    }
+
+    public void iniciarContadorDias() {
+        long dataAtual = System.currentTimeMillis();
+        prefs.putLong("data_inicio", dataAtual);
+        prefs.putInteger("dia_manual", 1); // Dia manual para progressão por fases
+        prefs.flush();
+        Gdx.app.log("SaveManager", "Contador de dias iniciado em: " + new Date(dataAtual));
+    }
+
+    private int calcularDiasReaisPassados() {
+        if (!prefs.contains("data_inicio")) {
+            return 0;
+        }
+
+        long dataInicio = prefs.getLong("data_inicio", 0);
+        long dataAtual = System.currentTimeMillis();
+
+        long diferencaMs = dataAtual - dataInicio;
+
+        int diasPassados = (int) (diferencaMs / 86400000L); // Converte pra dias
+
+        return diasPassados;
+    }
+
+    public int getDiaAtual() {
+        int diaManual = prefs.getInteger("dia_manual", 1);
+        int diasReais = calcularDiasReaisPassados();
+
+        int diaCalculado = Math.max(diaManual, diasReais + 1);
+
+        return Math.min(diaCalculado, 10);
+    }
+
+    public void avancarDia() {
+        int diaManual = prefs.getInteger("dia_manual", 1);
+        if (diaManual < 10) {
+            prefs.putInteger("dia_manual", diaManual + 1);
+            prefs.flush();
+            Gdx.app.log("SaveManager", "Avançou para o dia " + (diaManual + 1));
+        } else {
+            Gdx.app.log("SaveManager", "Já está no último dia (10)");
+        }
     }
 
     // ===== LOAD - STATS E SKIN =====

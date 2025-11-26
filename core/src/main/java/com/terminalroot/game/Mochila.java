@@ -154,6 +154,13 @@ public class Mochila implements Screen {
         Label labelForca = new Label("Força: " + forca, labelStyle);
         labelForca.setPosition(630, 390);
         stage.addActor(labelForca);
+
+        controleMochila.criarBotao("Passar Dia",700,50,5f,5f, new Botao.AcaoBotao(){
+            @Override
+            public void executar(){
+                SaveManager.getInstance().avancarDia();
+            }
+        });
     }
 
     public void render(float delta){
