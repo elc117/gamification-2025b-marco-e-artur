@@ -61,7 +61,7 @@ Ressalta-se ainda que temos uma classe de botões, que serve apenas para facilit
 A criação das animações foi feita utilizando IA generativa, a https://www.godmodeai.co/
 . Ela gerou sprites com fundo transparente que usamos para montar as animações. As animações dos monstros foram retiradas do jogo Ragnarok, um MMORPG famoso que se encaixava na temática escolhida. Fora isso, utilizamos alguns assets das bibliotecas do itch.io, e as músicas foram retiradas do YouTube. Colocaremos os links nas referências.
 
-## Diagrama de classes
+## Diagrama de classes Inicial
 ![Diagrama de Estados](rdme_material/diagrama_classe.png)
 
 ## Diagrama de estados
