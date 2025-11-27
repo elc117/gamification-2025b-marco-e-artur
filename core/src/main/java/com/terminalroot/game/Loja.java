@@ -34,6 +34,9 @@ public class Loja implements Screen {
 
     Texture seta_volta;
 
+    // Teste inserir quantidade moeda
+    private Label labelmoedas;
+
     public Loja (final Main game, Controle_Diagrama_Estados controle){
         this.game = game;
         this.controle = controle;
@@ -50,6 +53,12 @@ public class Loja implements Screen {
         labelStyle.font = font;
         labelStyle.fontColor = Color.WHITE;
 
+        //Teste moedas
+        labelmoedas = new Label("Moedas: " + Main.getMoedas(), labelStyle);
+        labelmoedas.setPosition(550, 450);
+        labelmoedas.setFontScale(2f);
+        stage.addActor(labelmoedas);
+
         controleLoja = new ControleBotao(stage, skin);
 
         controleLoja.criarBotao("", 7, 450, 60f, 2f, new Botao.AcaoBotao(){
@@ -63,7 +72,12 @@ public class Loja implements Screen {
             @Override
             public void executar() {
                 // Arma Forca1
-                Main.inventario.desbloquearArma(FORCA_1);
+                if(Main.getMoedas() >= 1){
+                    Main.inventario.desbloquearArma(FORCA_1);
+                    Main.setMoedas(Main.getMoedas() -1);
+                    Main.setForca(Main.getForca() + 1);
+                    atualizarMoedas();
+                }
             }
         });
 
@@ -71,7 +85,12 @@ public class Loja implements Screen {
             @Override
             public void executar() {
                 // Arma forca2
-                Main.inventario.desbloquearArma(FORCA_2);
+                if(Main.getMoedas() >= 2){
+                    Main.inventario.desbloquearArma(FORCA_2);
+                    Main.setMoedas(Main.getMoedas() - 2);
+                    Main.setForca(Main.getForca() + 2);
+                    atualizarMoedas();
+                }
             }
         });
 
@@ -79,7 +98,13 @@ public class Loja implements Screen {
             @Override
             public void executar() {
                 // Arma forca3
-                Main.inventario.desbloquearArma(FORCA_3);
+                if(Main.getMoedas() >= 3){
+                    Main.inventario.desbloquearArma(FORCA_3);
+                    Main.setMoedas(Main.getMoedas() - 3);
+                    Main.setForca(Main.getForca() + 3);
+                    atualizarMoedas();
+                }
+
             }
         });
 
@@ -87,7 +112,12 @@ public class Loja implements Screen {
             @Override
             public void executar() {
                 //Arma int 1
-                Main.inventario.desbloquearArma(INT_1);
+                if(Main.getMoedas() >= 1){
+                    Main.inventario.desbloquearArma(INT_1);
+                    Main.setMoedas(Main.getMoedas() - 1);
+                    Main.setInteligencia(Main.getInteligencia() + 1);
+                    atualizarMoedas();
+                }
             }
         });
 
@@ -95,8 +125,12 @@ public class Loja implements Screen {
             @Override
             public void executar() {
                 // Arma int2
-                Main.inventario.desbloquearArma(INT_2);
-
+                if(Main.getMoedas() >= 2){
+                    Main.inventario.desbloquearArma(INT_2);
+                    Main.setMoedas(Main.getMoedas() - 2);
+                    Main.setInteligencia(Main.getInteligencia() + 2);
+                    atualizarMoedas();
+                }
             }
         });
 
@@ -104,7 +138,12 @@ public class Loja implements Screen {
             @Override
             public void executar() {
                 // Arma int 3
-                Main.inventario.desbloquearArma(INT_3);
+                if(Main.getMoedas() >= 3){
+                    Main.inventario.desbloquearArma(INT_3);
+                    Main.setMoedas(Main.getMoedas() - 3);
+                    Main.setInteligencia(Main.getInteligencia() + 3);
+                    atualizarMoedas();
+                }
             }
         });
 
@@ -112,7 +151,11 @@ public class Loja implements Screen {
             @Override
             public void executar() {
                 // Skin solomonk
-                Main.inventario.desbloquearSkin(SkinSolomonk);
+                if(Main.getMoedas() >= 4){
+                    Main.inventario.desbloquearSkin(SkinSolomonk);
+                    Main.setMoedas(Main.getMoedas() - 4);
+                    atualizarMoedas();
+                }
             }
         });
 
@@ -120,13 +163,21 @@ public class Loja implements Screen {
             @Override
             public void executar() {
                 // Skin raposa
-                Main.inventario.desbloquearSkin(Skinraposa);
+                if(Main.getMoedas() >= 4){
+                    Main.inventario.desbloquearSkin(Skinraposa);
+                    Main.setMoedas(Main.getMoedas() - 4);
+                    atualizarMoedas();
+                }
             }
         });
 
         com.badlogic.gdx.InputMultiplexer multiplexer = new com.badlogic.gdx.InputMultiplexer();
         multiplexer.addProcessor(stage);
         Gdx.input.setInputProcessor(multiplexer);
+    }
+
+    private void atualizarMoedas() {
+        labelmoedas.setText("Moedas: " + Main.getMoedas());
     }
 
     public void render(float delta){

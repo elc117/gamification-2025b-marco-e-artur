@@ -76,6 +76,24 @@ public class Main extends Game {
         Gdx.app.log("Main", "Dados salvos com sucesso!");
     }
 
+    public static int getMoedas() {
+        return moedas;
+    }
+
+    public static int getForca() {
+        return forca;
+    }
+
+    public static int getInteligencia() {
+        return inteligencia;
+    }
+
+    public static void setMoedas(int novasMoedas) {
+        moedas = novasMoedas;
+        SaveManager.getInstance().salvarStats(forca, inteligencia, moedas);
+    }
+
+
     public static void setForca(int novaForca) {
         forca = novaForca;
         SaveManager.getInstance().salvarStats(forca, inteligencia, moedas);
