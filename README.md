@@ -26,9 +26,9 @@ Outra parte que tive que aprender, mesmo não sendo diretamente relacionada à p
 
 #### Marco:
 
-Eu acredito que fiquei com uma parte bastante simples, mas com uma série de detalhes que envolvem algumas características particulares da orientação a objetos. Nesse sentido, acredito que não consegui desenvolver tão bem essa parte. Uma das problemáticas foi a empolgação diante do trabalho; eu e o Arthur começamos a discutir ideias e queríamos implementar todas. Isso muitas vezes nos levou a ignorar alguns códigos mais “feios” para conseguirmos avançar e colocar as funcionalidades que desejávamos no jogo. Em síntese, de maneira mais formal, pode-se dizer que ignoramos a problemática da dívida técnica, o que custou bastante tempo para implementar as funcionalidades e realizar alterações no final, uma vez que a falta de encapsulamento e o conflito entre algumas classes foram bastante incômodos no desenvolvimento das variáveis que acompanham a evolução do personagem do usuário.
+Eu acredito que fiquei com uma parte bastante simples, mas com uma série de detalhes que envolvem algumas características particulares da orientação a objetos. Nesse sentido, acredito que não consegui desenvolver tão bem essa parte. Uma das problemáticas foi a empolgação diante do trabalho; eu e o Artur começamos a discutir ideias e queríamos implementar todas. Isso muitas vezes nos levou a ignorar alguns códigos mais “feios” para conseguirmos avançar e colocar as funcionalidades que desejávamos no jogo. Em síntese, de maneira mais formal, pode-se dizer que ignoramos a problemática da dívida técnica, o que custou bastante tempo para implementar as funcionalidades e realizar alterações no final, uma vez que a falta de encapsulamento e o conflito entre algumas classes foram bastante incômodos no desenvolvimento das variáveis que acompanham a evolução do personagem do usuário.
 
-Em relação às dificuldades que tive, muitas já foram comentadas pelo Arthur acima. A dificuldade de lidar com animação, recortar os spritesheets manualmente ou fazer algum código específico para isso, gerar os próprios spritesheets ou tentar editá-los em programas de edição, entre outros diversos problemas relacionados à parte visual do jogo. No código, não houve nada em que eu realmente travasse por muito tempo sem conseguir resolver; no geral, a maioria dos problemas mais complexos teve uma solução encontrada em, no máximo, três horas. 
+Em relação às dificuldades que tive, muitas já foram comentadas pelo Artur acima. A dificuldade de lidar com animação, recortar os spritesheets manualmente ou fazer algum código específico para isso, gerar os próprios spritesheets ou tentar editá-los em programas de edição, entre outros diversos problemas relacionados à parte visual do jogo. No código, não houve nada em que eu realmente travasse por muito tempo sem conseguir resolver; no geral, a maioria dos problemas mais complexos teve uma solução encontrada em, no máximo, três horas. 
 1. Refazer a base do código, pois ele não havia sido preparado para HTML:
 Nesse processo, acabamos perdendo nosso README antigo, nossos commits e algumas partes do código, tudo devido a um brute force que fiz para conseguir incluir as mudanças de base que haviam sido feitas em vários arquivos da LibGDX. Esse processo de tentativa de resolução dos erros até a desistência e criação de um novo projeto durou cerca de três dias, o que nos desmotivou bastante e resultou em um período de desenvolvimento muito menor em comparação aos demais momentos.
 
@@ -102,7 +102,7 @@ https://github.com/user-attachments/assets/ec6e7ff8-a112-47ad-aa6f-3aaee6cd6bb6
 # 17/11 ~19/11
 (Marco) 500 tentativas para inserir o jogo no Itch.io
 
-
+-->
 ### Refêrencias:
 
 Inteligência artificial: foi utilizado principalmente na criação de animações, refatoração e resolução de erros, assim como no readme para corrigir erros de português.
@@ -126,13 +126,13 @@ Ferramentas para manipulação de imagens e criação de spritesheets:
 - [Calculadora regra de 3](https://www.4devs.com.br/calculadora_regra_tres_simples): utilizado para posicionar elementos na tela.
 - [Gif to SpriteSheet](https://onlinegiftools.com/convert-gif-to-sprite-sheet)
 
-1- https://www.reddit.com/r/learnprogramming/comments/4wcdex/help_with_turnbased_combat_in_gui_java/
-
-2- https://github.com/ThierrirAlencar/Pkm_libgdx_BattleSimulator
-
-3- https://gamedev.stackexchange.com/questions/136659/is-it-possible-to-use-animated-gif-images-in-lbgdx (foi utilizado mas percebemos que não era tão eficaz, mas é interessante)
-
-4- https://www.youtube.com/watch?v=wtnMKSPQToA&t=1314s
+  - https://www.reddit.com/r/learnprogramming/comments/4wcdex/help_with_turnbased_combat_in_gui_java/
+  - https://github.com/ThierrirAlencar/Pkm_libgdx_BattleSimulator
+  - https://gamedev.stackexchange.com/questions/136659/is-it-possible-to-use-animated-gif-images-in-lbgdx (foi utilizado mas percebemos que não era tão eficaz, mas é interessante)
+  - https://www.youtube.com/watch?v=wtnMKSPQToA&t=1314s
+  - https://libgdx.com/wiki/graphics/2d/2d-animation
+  - https://ansimuz.itch.io/gothicvania-magic-pack-9
+  
 
 ### Referências Marco:
 Musicas: 
