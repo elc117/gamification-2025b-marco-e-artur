@@ -27,7 +27,7 @@ public class Main extends Game {
     public Usuario jogador;
 
     // true = anjos, false = demonios
-    public boolean eanjo = true;
+    public static boolean eanjo = true;
 
     // controle fase
     public int fase_atual = 1;

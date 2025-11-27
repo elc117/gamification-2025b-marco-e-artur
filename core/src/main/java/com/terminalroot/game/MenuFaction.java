@@ -11,10 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import static com.terminalroot.game.Controle_Diagrama_Estados.State.MENU_FACTION;
 import static com.terminalroot.game.Controle_Diagrama_Estados.State.MENU_PRINCIPAL;
 
-public class MenuInicial implements Screen {
+public class MenuFaction implements Screen {
     final Main game;
     final Controle_Diagrama_Estados controle;
 
@@ -22,21 +21,17 @@ public class MenuInicial implements Screen {
     private Skin skin;
     ControleBotao controleMenuInicial;
 
-    private boolean video_acabou = true;
 
     Texture imagemtela;
 
-    public MenuInicial(final Main game, Controle_Diagrama_Estados controle){
+    public MenuFaction(final Main game, Controle_Diagrama_Estados controle){
         this.game = game;
         this.controle = controle;
     }
 
     @Override
     public void show(){
-
-        video_acabou = true;
-
-        imagemtela = new Texture("imaggge.jpg");
+        imagemtela = new Texture("angeldemon.jpg");
 
         skin = new Skin(Gdx.files.internal("ui/ui_skin.json"));
         stage = new Stage(new ScreenViewport());
@@ -50,18 +45,19 @@ public class MenuInicial implements Screen {
         table.top().right();
         stage.addActor(table);
 
-        controleMenuInicial.criarBotao("Novo Jogo", 58, 450, 60f, 2f, new Botao.AcaoBotao(){
+        controleMenuInicial.criarBotao("Anjos", 58, 450, 60f, 2f, new Botao.AcaoBotao(){
             @Override
 
             public void executar() {
-                game.resetarDados();
-                controle.Trocar_estado(MENU_FACTION);
+                Main.eanjo = true;
+                controle.Trocar_estado(MENU_PRINCIPAL);
             }
         });
 
-        controleMenuInicial.criarBotao("Carregar Jogo", 638, 450, 60f, 2f, new Botao.AcaoBotao(){
+        controleMenuInicial.criarBotao("Demonios", 638, 450, 60f, 2f, new Botao.AcaoBotao(){
             @Override
             public void executar() {
+                Main.eanjo = false;
                 controle.Trocar_estado(MENU_PRINCIPAL);
             }
         });
@@ -70,17 +66,14 @@ public class MenuInicial implements Screen {
     @Override
     public void render(float delta){
         ScreenUtils.clear(Color.DARK_GRAY);
+        game.batch.setProjectionMatrix(stage.getCamera().combined);
+        game.batch.begin();
+        game.batch.setColor(Color.WHITE);
+        game.batch.draw(imagemtela, 0, 0, stage.getWidth(), stage.getHeight());
+        game.batch.end();
 
-        if(video_acabou && imagemtela != null){
-            game.batch.setProjectionMatrix(stage.getCamera().combined);
-            game.batch.begin();
-            game.batch.setColor(Color.WHITE);
-            game.batch.draw(imagemtela, 0, 0, stage.getWidth(), stage.getHeight());
-            game.batch.end();
-
-            stage.act(delta);
-            stage.draw();
-        }
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override

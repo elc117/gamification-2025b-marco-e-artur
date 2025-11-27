@@ -17,7 +17,9 @@ public class Controle_Diagrama_Estados {
         MENU_MOCHILA,
         MENU_ATIVIDADES_ESTUDOS,
         MENU_FINALJOGO,
-        MENU_LOJA
+        MENU_LOJA,
+        MENU_MISSAO,
+        MENU_FACTION
     }
 
     private State estadoAtual;
@@ -74,6 +76,13 @@ public class Controle_Diagrama_Estados {
 
             case MENU_LOJA:
                 tela_atual = new Loja(game,this);
+                break;
+
+            case MENU_MISSAO:
+                tela_atual = new Missao(game,this);
+                break;
+            case MENU_FACTION:
+                tela_atual = new MenuFaction(game,this);
                 break;
         }
         game.setScreen(tela_atual);
