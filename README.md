@@ -65,6 +65,7 @@ A criação das animações foi feita utilizando IA generativa, a https://www.go
 ### Video de execução na WEB:
 
 
+https://github.com/user-attachments/assets/ec6e7ff8-a112-47ad-aa6f-3aaee6cd6bb6
 
 
 <!-- ## Processo de Desenvolvimento 
