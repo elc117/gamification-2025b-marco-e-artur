@@ -26,6 +26,16 @@ Outra parte que tive que aprender, mesmo não sendo diretamente relacionada à p
 
 #### Marco:
 
+Eu acredito que fiquei com uma parte bastante simples, mas com uma série de detalhes que envolvem algumas características particulares da orientação a objetos. Nesse sentido, acredito que não consegui desenvolver tão bem essa parte. Uma das problemáticas foi a empolgação diante do trabalho; eu e o Arthur começamos a discutir ideias e queríamos implementar todas. Isso muitas vezes nos levou a ignorar alguns códigos mais “feios” para conseguirmos avançar e colocar as funcionalidades que desejávamos no jogo. Em síntese, de maneira mais formal, pode-se dizer que ignoramos a problemática da dívida técnica, o que custou bastante tempo para implementar as funcionalidades e realizar alterações no final, uma vez que a falta de encapsulamento e o conflito entre algumas classes foram bastante incômodos no desenvolvimento das variáveis que acompanham a evolução do personagem do usuário.
+
+Em relação às dificuldades que tive, muitas já foram comentadas pelo Arthur acima. A dificuldade de lidar com animação, recortar os spritesheets manualmente ou fazer algum código específico para isso, gerar os próprios spritesheets ou tentar editá-los em programas de edição, entre outros diversos problemas relacionados à parte visual do jogo. No código, não houve nada em que eu realmente travasse por muito tempo sem conseguir resolver; no geral, a maioria dos problemas mais complexos teve uma solução encontrada em, no máximo, três horas. 
+1. Refazer a base do código, pois ele não havia sido preparado para HTML:
+Nesse processo, acabamos perdendo nosso README antigo, nossos commits e algumas partes do código, tudo devido a um brute force que fiz para conseguir incluir as mudanças de base que haviam sido feitas em vários arquivos da LibGDX. Esse processo de tentativa de resolução dos erros até a desistência e criação de um novo projeto durou cerca de três dias, o que nos desmotivou bastante e resultou em um período de desenvolvimento muito menor em comparação aos demais momentos.
+
+2. Problemas ao subir o ZIP para o Itch.io:
+Eu realmente não entendi o que estava acontecendo, mas quando eu enviava o ZIP para o Itch.io, a tela do jogo ficava apenas preta. Ao inspecionar os elementos, descobri que o Itch.io não estava conseguindo detectar a imagem da tela inicial. Diante disso, primeiro me certifiquei de que a imagem estava no ZIP e tentei novamente, mas o erro persistiu. Depois, removi a imagem do projeto, retirei todas as chamadas e menções a ela e recompilei o código HTML. Porém, o erro continuava: o Itch.io ainda buscava essa imagem mesmo ela não estando em nenhuma parte do código.
+
+Diante disso, fiz uma busca minuciosa fora do IntelliJ, navegando diretamente pelas pastas do projeto, e encontrei um arquivo temporário (acredito que era isso) que ainda mencionava a imagem. Apaguei esse arquivo e, finalmente, o jogo funcionou corretamente no Itch.io.
 
 
 
@@ -51,7 +61,6 @@ A criação das animações foi feita utilizando IA generativa, a https://www.go
 
 2- Dar 2 cliques no arquivo Lwjgl3Launcher.java
 <img width="1593" height="161" alt="image" src="https://github.com/user-attachments/assets/8e0c4b9c-a3be-432f-a40e-cdb7e4f35170" />
-
 
 ### Video de execução na WEB:
 
@@ -80,8 +89,17 @@ A criação das animações foi feita utilizando IA generativa, a https://www.go
 # 04/11 ~~ 06/11
 (Artur) Quiz 90% pronto, só falta adicionar a lógica de uma questão por dia, talvez tenha algumas coisas pra melhorar, como a escolha de questões aleatórias.
 
-# 06/11 ~~ XX 
-(Artur) Inicio do sistema de batalha e animação dos monstros. -->
+# 06/11 ~~ 26/11
+(Artur) Inicio do sistema de batalha e animação dos monstros. 
+
+# 06/11 ~~ 10/11 
+(Marco) Tentativa de implementar a movimentação do boneco com diferentes skins e diferentes armas
+
+# 10/11 ~~ 26/11
+(Marco) Inserção das diversas telas e começo das pontuações, hp e status do personagem, correção de bugs e fatoramento de algumas partes do código
+
+# 17/11 ~19/11
+(Marco) 500 tentativas para inserir o jogo no Itch.io
 
 
 ### Refêrencias:
@@ -114,4 +132,20 @@ Ferramentas para manipulação de imagens e criação de spritesheets:
 3- https://gamedev.stackexchange.com/questions/136659/is-it-possible-to-use-animated-gif-images-in-lbgdx (foi utilizado mas percebemos que não era tão eficaz, mas é interessante)
 
 4- https://www.youtube.com/watch?v=wtnMKSPQToA&t=1314s
+
+### Referências Marco:
+Musicas: 
+- https://www.youtube.com/watch?v=L3J8L2bLE10
+- https://www.youtube.com/watch?v=sNif-Y0_7-U
+- https://www.youtube.com/watch?v=757G_El3ABI&t=9s
+- https://www.youtube.com/watch?v=9orpPJNky2w&t=147s
+
+Tutoriais no Youtube de Libgdx:
+- Kotlin Libgdx RPG Canal Quillraven https://www.youtube.com/watch?v=8rYCdEqXYa4&list=PLTKHCDn5RKK-_mX0s8BJNz7pQecR25689
+- A simple game e A simple game Extend do próprio canal da Libgdx
+- https://www.youtube.com/watch?v=R9W4dyaatEw&t=681s
+- Aprenda Java Criando um Jogo 2D com LibGDX - #01 -> TerminalRoot https://www.youtube.com/watch?v=2bmvlwvnirk
+
+Uma série de referências sobre dúvidas, erros, implementações foram vistas.
+- Em relação aos códigos dos colegas passados, bastante inspiração foi retirada do Trabalho do Pedro Farias e do Julio Cesar: https://github.com/Julio-Cesar-PC/Bibl.io/tree/main
 
